@@ -14,5 +14,5 @@ public class Cnpj
 
     public string CnpjNumber { get; }
 
-    public bool IsValid => CnpjNumber.Length < 14 ? false : true;
+    public bool IsValid => CnpjNumber.Length == 14;
 }
