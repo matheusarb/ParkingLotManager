@@ -6,7 +6,7 @@ public class Company
 {
     public int Id { get; }
     public string Name { get; private set; }
-    public int CNPJ { get; private set; }
+    public Cnpj Cnpj { get; private set; }
     public Address Address { get; private set; }
     public string Telephone { get; private set; }
     public ParkingSlots MotorcycleParkingSlots { get; private set; }
