@@ -2,6 +2,9 @@
 
 public class Cnpj
 {
+    private Cnpj()
+    {}
+
     public Cnpj(string cnpjNumber)
     {
         CnpjNumber = cnpjNumber;
