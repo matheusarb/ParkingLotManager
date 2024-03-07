@@ -18,6 +18,9 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 
         builder.Property(x => x.Name)
             .IsRequired()
+            .HasColumnName("Name")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(160);
 
 
     }
