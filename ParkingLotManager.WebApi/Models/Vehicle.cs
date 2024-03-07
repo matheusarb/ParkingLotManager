@@ -11,5 +11,6 @@ public class Vehicle
     public EVehicleType Type { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime LastUpdateDate { get; private set; }
-    public Company CompanyId { get; private set; }
+
+    public Company CompanyName { get; private set; }
 }
