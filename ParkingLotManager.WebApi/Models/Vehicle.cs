@@ -9,5 +9,7 @@ public class Vehicle
     public string Model { get; private set; }
     public string Color { get; private set; }
     public EVehicleType Type { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime LastUpdateDate { get; private set; }
     public Company CompanyId { get; private set; }
 }
