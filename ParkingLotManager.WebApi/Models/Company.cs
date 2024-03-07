@@ -11,4 +11,6 @@ public class Company
     public string Telephone { get; private set; }
     public ParkingSlots MotorcycleParkingSlots { get; private set; }
     public ParkingSlots CarParkingSlots { get; private set; }
+    public IList<Vehicle> Vehicles { get; private set; }
+
 }
