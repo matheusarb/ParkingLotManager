@@ -11,10 +11,7 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
         builder.ToTable("Company");
 
         //PrimaryKey and IDENTITY_COLUMN(1, 1)
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id)
-            .ValueGeneratedOnAdd()
-            .UseIdentityColumn();
+        builder.HasKey(x => x.Name);
 
         builder.Property(x => x.Name)
             .IsRequired()
@@ -22,12 +19,21 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
             .HasColumnType("VARCHAR")
             .HasMaxLength(160);
 
+        builder.Property(x => x.Telephone)
+            .IsRequired()
+            .HasColumnName("Telephone")
+            .HasColumnType("SMALLINT")
+            .HasMaxLength(12);
+
+
+        //builder.ComplexProperty(x => x.Cnpj)
+        //    .IsRequired();
         // Relationships
-        builder.HasMany(x => x.Vehicles)
-            .WithOne(x => x.CompanyId)
-            .HasForeignKey("VehicleLicensePlate")
-            .HasConstraintName("FK_Company_VehicleLicensePlate")
-            .OnDelete(DeleteBehavior.Cascade);           
-            
+        //builder.HasMany(x => x.Vehicles)
+        //    .WithOne(x => x.CompanyId)
+        //    .HasForeignKey("VehicleLicensePlate")
+        //    .HasConstraintName("FK_Company_VehicleLicensePlate")
+        //    .OnDelete(DeleteBehavior.Cascade);
+
     }
 }
