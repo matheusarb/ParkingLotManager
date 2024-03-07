@@ -7,7 +7,7 @@ namespace ParkingLotManager.WebApi.Data.Mappings;
 public class CompanyMap : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
-    {        
+    {
         builder.ToTable("Company");
 
         //PrimaryKey and IDENTITY_COLUMN(1, 1)
@@ -22,6 +22,12 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
             .HasColumnType("VARCHAR")
             .HasMaxLength(160);
 
-
+        // Relationships
+        builder.HasMany(x => x.Vehicles)
+            .WithOne(x => x.CompanyId)
+            .HasForeignKey("VehicleLicensePlate")
+            .HasConstraintName("FK_Company_VehicleLicensePlate")
+            .OnDelete(DeleteBehavior.Cascade);           
+            
     }
 }
