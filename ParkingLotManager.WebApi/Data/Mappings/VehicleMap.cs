@@ -37,8 +37,8 @@ public class VehicleMap : IEntityTypeConfiguration<Vehicle>
             .HasMaxLength(80);
 
         builder.Property(x => x.Type)
-            .IsRequired()
             .HasConversion<int>()
+            .IsRequired()
             .HasColumnName("Type");
 
         builder.Property(x => x.CreatedAt)
@@ -54,6 +54,13 @@ public class VehicleMap : IEntityTypeConfiguration<Vehicle>
             .HasDefaultValue(DateTime.Now.ToUniversalTime());
 
         //Index
-        builder.HasIndex(x => x.LicensePlate, "IX_Vehicle_LicensePlate");
+        //builder.HasIndex(x => x.LicensePlate, "IX_Vehicle_LicensePlate");
+
+        // Relationships
+        //builder.HasOne(x => x.CompanyId)
+        //    .WithMany(x => x.Vehicles)
+        //    .HasForeignKey("CompanyName")
+        //    .HasConstraintName("FK_Vehicle_CompanyName")
+        //    .OnDelete(DeleteBehavior.Cascade);
     }
 }
