@@ -41,6 +41,18 @@ public class VehicleMap : IEntityTypeConfiguration<Vehicle>
             .HasConversion<int>()
             .HasColumnName("Type");
 
+        builder.Property(x => x.CreatedAt)
+            .IsRequired()
+            .HasColumnName("CreatedAt")
+            .HasColumnType("SMALLDATETIME")
+            .HasDefaultValue(DateTime.Now.ToUniversalTime());
+        
+        builder.Property(x => x.LastUpdateDate)
+            .IsRequired()
+            .HasColumnName("LastUpdateDate")
+            .HasColumnType("SMALLDATETIME")
+            .HasDefaultValue(DateTime.Now.ToUniversalTime());
+
         //Index
         builder.HasIndex(x => x.LicensePlate, "IX_Vehicle_LicensePlate");
     }
