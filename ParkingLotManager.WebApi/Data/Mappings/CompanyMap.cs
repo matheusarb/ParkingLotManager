@@ -8,32 +8,51 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
+        // Table
         builder.ToTable("Company");
 
-        //PrimaryKey and IDENTITY_COLUMN(1, 1)
+        // Primary Key
         builder.HasKey(x => x.Name);
-
         builder.Property(x => x.Name)
             .IsRequired()
             .HasColumnName("Name")
-            .HasColumnType("VARCHAR")
-            .HasMaxLength(160);
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(80);
+
+        builder.OwnsOne(x => x.Cnpj, cnpj =>
+        {
+            cnpj.Property(p => p.CnpjNumber)
+                .IsRequired()
+                .HasColumnName("CnpjNumber")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(14);
+        });
+
+        builder.OwnsOne(x => x.Address, address =>
+        {
+            address.Property(p => p.Street)
+                .IsRequired()
+                .HasColumnName("Street")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(100);
+
+            address.Property(p => p.City)
+                .IsRequired()
+                .HasColumnName("City")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(50);
+
+            address.Property(p => p.ZipCode)
+                .IsRequired()
+                .HasColumnName("ZipCode")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(30);
+        });
 
         builder.Property(x => x.Telephone)
             .IsRequired()
             .HasColumnName("Telephone")
-            .HasColumnType("SMALLINT")
-            .HasMaxLength(12);
-
-
-        //builder.ComplexProperty(x => x.Cnpj)
-        //    .IsRequired();
-        // Relationships
-        //builder.HasMany(x => x.Vehicles)
-        //    .WithOne(x => x.CompanyId)
-        //    .HasForeignKey("VehicleLicensePlate")
-        //    .HasConstraintName("FK_Company_VehicleLicensePlate")
-        //    .OnDelete(DeleteBehavior.Cascade);
-
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(30);
     }
 }
