@@ -1,6 +1,6 @@
 ﻿namespace ParkingLotManager.WebApi.Models.ValueObjects;
 
-public class Cnpj
+public class Cnpj : ValueObject
 {
     private Cnpj()
     {}
