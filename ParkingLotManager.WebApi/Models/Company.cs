@@ -9,5 +9,5 @@ public class Company
     public Address Address { get; private set; }
     public string Telephone { get; private set; }
     
-    public IList<Vehicle> Vehicles { get; private set; }
+    public ICollection<Vehicle> Vehicles { get; private set; }
 }

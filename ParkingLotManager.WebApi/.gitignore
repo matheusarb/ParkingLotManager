@@ -3,6 +3,10 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Data Folder
+./Data
+./Data/Migrations
+
 # dotenv files
 .env
 
@@ -482,4 +486,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-/ParkingLotManager.WebApi/Migrations

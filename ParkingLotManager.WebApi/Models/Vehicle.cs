@@ -12,5 +12,5 @@ public class Vehicle
     public DateTime CreatedAt { get; private set; }
     public DateTime LastUpdateDate { get; private set; }
 
-    public Company CompanyName { get; private set; }
+    public Company Company { get; private set; }
 }
