@@ -1,14 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Data;
+using ParkingLotManager.WebApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Add Services
+LoadServices(builder);
 
 var app = builder.Build();
 
@@ -24,3 +23,14 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void LoadServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddControllers();
+
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    builder.Services.AddDbContext<AppDataContext>();
+}
