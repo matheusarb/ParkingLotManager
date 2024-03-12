@@ -44,18 +44,22 @@ public class VehicleMap : IEntityTypeConfiguration<Vehicle>
         builder.Property(x => x.CreatedAt)
             .IsRequired()
             .HasColumnName("CreatedAt")
-            .HasColumnType("SMALLDATETIME")
-            .HasDefaultValue(DateTime.Now.ToUniversalTime());
+            .HasColumnType("DATETIME")
+            .HasMaxLength(60)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("GETUTCDATE()");
 
         builder.Property(x => x.LastUpdateDate)
             .IsRequired()
             .HasColumnName("LastUpdateDate")
-            .HasColumnType("SMALLDATETIME")
-            .HasDefaultValue(DateTime.Now.ToUniversalTime());
+            .HasColumnType("DATETIME")
+            .HasMaxLength(60)
+            .HasDefaultValueSql("GETUTCDATE()");
 
         // Relationships
         builder.HasOne(x => x.Company)
             .WithMany(x => x.Vehicles)
+            .HasForeignKey(x => x.CompanyName)
             .HasConstraintName("FK_Vehicles_Company")
             .OnDelete(DeleteBehavior.Cascade);
     }
