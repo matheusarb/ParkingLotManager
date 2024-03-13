@@ -23,8 +23,7 @@ public class VehicleController : ControllerBase
             if (vehicles == null)
                 return BadRequest(new { message = "01EX1000 - Request could not be processed. Please try another time" });
 
-            //return Ok(new ResultViewModel<List<Vehicle>>(vehicles));
-            return new JsonResult(vehicles);
+            return Ok(new ResultViewModel<List<Vehicle>>(vehicles));
         }
         catch
         {
@@ -56,9 +55,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterVehicleAsync(
-        [FromServices] AppDataContext ctx,
-        [FromBody] RegisterVehicleViewModel viewModel)
+    public async Task<IActionResult> RegisterVehicleAsync([FromServices] AppDataContext ctx, [FromBody] RegisterVehicleViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<RegisterVehicleViewModel>(ModelState.GetErrors()));
@@ -88,8 +85,8 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateVehicle([FromServices] AppDataContext ctx, [FromRoute] string licensePlate, [FromBody] UpdateVehicleViewModel viewModel)
     {
-        if (viewModel.CheckIfAllNull(viewModel))
-            return BadRequest(new ResultViewModel<UpdateVehicleViewModel>("Cannot update infos if all values"));
+        if (viewModel.CheckIfAllEmpty(viewModel))
+            return BadRequest(new ResultViewModel<UpdateVehicleViewModel>("Cannot update infos if all values are empty"));
 
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<Vehicle>(ModelState.GetErrors()));
@@ -102,6 +99,7 @@ public class VehicleController : ControllerBase
             vehicle.Update(viewModel, vehicle);
             ctx.Update(vehicle);
             await ctx.SaveChangesAsync();
+
             return Ok(new ResultViewModel<Vehicle>(vehicle));
         }
         catch
