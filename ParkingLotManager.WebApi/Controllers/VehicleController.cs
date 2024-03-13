@@ -5,6 +5,7 @@ using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
+using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 
 namespace ParkingLotManager.WebApi.Controllers;
 
@@ -27,7 +28,7 @@ public class VehicleController : ControllerBase
         }
         catch
         {
-            return StatusCode(500, new ResultViewModel<List<Vehicle>>("01EX1001 falha interna no servidor"));
+            return StatusCode(500, new ResultViewModel<List<Vehicle>>("01EX1001 - Internal server error"));
         }
     }
 
