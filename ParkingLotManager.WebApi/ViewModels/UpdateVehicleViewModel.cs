@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace ParkingLotManager.WebApi.ViewModels;
 
 public class UpdateVehicleViewModel
-{   
+{
     public string? LicensePlate { get; set; }
     public string? Brand { get; set; }
     public string? Model { get; set; }
@@ -13,7 +13,7 @@ public class UpdateVehicleViewModel
     public EVehicleType Type { get; set; }
     public string? CompanyName { get; set; }
 
-    public bool CheckIfAllNull(UpdateVehicleViewModel viewModel)
+    public bool CheckIfAllEmpty(UpdateVehicleViewModel viewModel)
     {
         Type type = viewModel.GetType();
         var props = type.GetProperties();
@@ -22,7 +22,7 @@ public class UpdateVehicleViewModel
         foreach (var prop in props)
         {
             var value = prop.GetValue(viewModel);
-            if (value == null || (prop.PropertyType.IsValueType && value.Equals(Activator.CreateInstance(prop.PropertyType))))
+            if (value == "" || (prop.PropertyType.IsValueType && value.Equals(Activator.CreateInstance(prop.PropertyType))))
                 count++;
         }
 
