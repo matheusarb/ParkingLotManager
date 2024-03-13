@@ -33,7 +33,7 @@ public class Vehicle
         vehicle.Brand = viewModel.Brand.IsNullOrEmpty() ? vehicle.Brand : viewModel.Brand;
         vehicle.Model = viewModel.Model.IsNullOrEmpty() ? vehicle.Model : viewModel.Model;
         vehicle.Color = viewModel.Color.IsNullOrEmpty() ? vehicle.Color : viewModel.Color;
-        vehicle.Type = vehicle.Type != viewModel.Type ? viewModel.Type : vehicle.Type;
+        vehicle.Type = viewModel.Type != vehicle.Type ? viewModel.Type : vehicle.Type;
         vehicle.CompanyName = viewModel.CompanyName.IsNullOrEmpty() ? vehicle.CompanyName : viewModel.CompanyName;
     }
 
