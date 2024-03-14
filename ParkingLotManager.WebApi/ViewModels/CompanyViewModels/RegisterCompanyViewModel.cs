@@ -6,11 +6,28 @@ namespace ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
 
 public class RegisterCompanyViewModel : Company
 {
+    public RegisterCompanyViewModel(
+        string name,
+        Cnpj cnpj,
+        Address address,
+        string telephone,
+        int carSlots,
+        int motorcycleSlots)
+    {
+        Name = name;
+        Cnpj = cnpj;
+        Address = address;
+        Telephone = telephone;
+        CarSlots = carSlots;
+        MotorcycleSlots = motorcycleSlots;
+    }
+
     [Required(ErrorMessage = "Company name is required")]
+    [MinLength(3, ErrorMessage ="Company name must have at least 3 characters")]
     public string Name { get; set; }
 
     [Required(ErrorMessage = "Company CNPJ is required")]
-    public Cnpj CNPJ { get; set; }
+    public Cnpj Cnpj { get; set; }
 
     [Required(ErrorMessage = "Company address is required")]
     public Address Address { get; set; }
