@@ -9,6 +9,7 @@ public class AppDataContext : DbContext
 {
     public DbSet<Company> Companies { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlServer("Server=localhost,1433;Database=ParkingLotManager;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True");
@@ -17,5 +18,6 @@ public class AppDataContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new CompanyMap());
         modelBuilder.ApplyConfiguration(new VehicleMap());
+        modelBuilder.ApplyConfiguration(new UserMap());
     }
 }
