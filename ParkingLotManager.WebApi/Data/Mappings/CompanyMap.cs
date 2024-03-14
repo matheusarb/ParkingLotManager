@@ -54,15 +54,5 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
             .HasColumnName("Telephone")
             .HasColumnType("NVARCHAR")
             .HasMaxLength(30);
-
-        builder.Property(x => x.CarSlots)
-            .IsRequired()
-            .HasColumnName("CarSlots")
-            .HasColumnType("INT");
-        
-        builder.Property(x => x.MotorcycleSlots)
-            .IsRequired()
-            .HasColumnName("MotorcycleSlots")
-            .HasColumnType("INT");
     }
 }
