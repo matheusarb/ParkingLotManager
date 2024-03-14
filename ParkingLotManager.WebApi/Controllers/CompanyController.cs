@@ -16,9 +16,7 @@ public class CompanyController : ControllerBase
     private readonly AppDataContext _ctx;
 
     public CompanyController(AppDataContext ctx)
-    {
-        _ctx = ctx;
-    }
+        => _ctx = ctx;
 
     [HttpGet("v1/companies")]
     public async Task<IActionResult> GetAsync([FromServices] AppDataContext ctx)
@@ -90,7 +88,7 @@ public class CompanyController : ControllerBase
             var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == name);
             if (company == null)
                 return NotFound(new ResultViewModel<UpdateCompanyViewModel>("05EX5007 - Company not found"));
-            company.Update(viewModel);
+            company.Update(viewModel, viewModel.Address);
             _ctx.Update(company);
             await _ctx.SaveChangesAsync();
 
