@@ -2,16 +2,30 @@
 using ParkingLotManager.WebApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Security.Claims;
 
 namespace ParkingLotManager.WebApi.Services;
 
 public class TokenService
 {
-    public string GenerateToken(Company company)
+    public string GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-        var tokenDescriptor = new SecurityTokenDescriptor();
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new (ClaimTypes.Name, "Matheus Ribeiro"),
+                new (ClaimTypes.Role, "admin"),
+                new (ClaimTypes.Role, "user")
+            }),
+            Expires = DateTime.UtcNow.AddHours(4),
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+        };        
+        
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
