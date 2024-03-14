@@ -1,4 +1,6 @@
-﻿namespace ParkingLotManager.WebApi.Models.ValueObjects;
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace ParkingLotManager.WebApi.Models.ValueObjects;
 
 public class Cnpj : ValueObject
 {
@@ -17,5 +19,5 @@ public class Cnpj : ValueObject
 
     public string CnpjNumber { get; }
 
-    public bool IsValid => CnpjNumber.Length == 14;
+    public bool IsValid => !CnpjNumber.IsNullOrEmpty() && CnpjNumber.Length == 14;
 }
