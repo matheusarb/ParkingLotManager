@@ -25,13 +25,13 @@ public class Company
         MotorcycleSlots = viewModel.MotorcycleSlots;
     }
 
-    public void Update(UpdateCompanyViewModel viewModel)
+    public void Update(UpdateCompanyViewModel viewModel, Address address)
     {
-        this.Name = viewModel.Name.IsNullOrEmpty() ? this.Name : viewModel.Name;
-        this.Cnpj = !viewModel.Cnpj.IsValid ? this.Cnpj : viewModel.Cnpj;
-        this.Address = viewModel.Address ?? this.Address;
-        this.Telephone = viewModel.Telephone.IsNullOrEmpty() ? this.Telephone : viewModel.Telephone;
-        this.CarSlots = viewModel.CarSlots == 0 || viewModel.CarSlots == null ? this.CarSlots : viewModel.CarSlots;
-        this.MotorcycleSlots = viewModel.MotorcycleSlots == 0 || viewModel.MotorcycleSlots == null ? this.MotorcycleSlots : viewModel.MotorcycleSlots;
+        Name = viewModel.Name.IsNullOrEmpty() ? this.Name : viewModel.Name;
+        Cnpj = !viewModel.Cnpj.IsValid ? this.Cnpj : viewModel.Cnpj;
+        Address = Address.Update(viewModel.Address);
+        Telephone = viewModel.Telephone.IsNullOrEmpty() ? this.Telephone : viewModel.Telephone;
+        CarSlots = viewModel.CarSlots == 0 || viewModel.CarSlots == null ? this.CarSlots : viewModel.CarSlots;
+        MotorcycleSlots = viewModel.MotorcycleSlots == 0 || viewModel.MotorcycleSlots == null ? this.MotorcycleSlots : viewModel.MotorcycleSlots;
     }
 }
