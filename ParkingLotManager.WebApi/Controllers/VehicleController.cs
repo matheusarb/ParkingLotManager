@@ -56,7 +56,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterVehicleAsync([FromServices] AppDataContext ctx, [FromBody] RegisterVehicleViewModel viewModel)
+    public async Task<IActionResult> RegisterAsync([FromServices] AppDataContext ctx, [FromBody] RegisterVehicleViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<RegisterVehicleViewModel>(ModelState.GetErrors()));
@@ -84,7 +84,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateVehicle([FromServices] AppDataContext ctx, [FromRoute] string licensePlate, [FromBody] UpdateVehicleViewModel viewModel)
+    public async Task<IActionResult> Update([FromServices] AppDataContext ctx, [FromRoute] string licensePlate, [FromBody] UpdateVehicleViewModel viewModel)
     {
         if (viewModel.CheckIfAllEmpty(viewModel))
             return BadRequest(new ResultViewModel<UpdateVehicleViewModel>("Cannot update infos if all values are empty"));
@@ -110,7 +110,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpDelete("v1/vehicles/{licensePlate}")]
-    public async Task<IActionResult> DeleteVehicle([FromServices] AppDataContext ctx,[FromRoute] string licensePlate)
+    public async Task<IActionResult> Delete([FromServices] AppDataContext ctx,[FromRoute] string licensePlate)
     {        
         try
         {
