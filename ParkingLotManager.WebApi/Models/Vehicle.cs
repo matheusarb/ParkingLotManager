@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ParkingLotManager.WebApi.Enums;
-using ParkingLotManager.WebApi.ViewModels;
+using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 
 namespace ParkingLotManager.WebApi.Models;
 

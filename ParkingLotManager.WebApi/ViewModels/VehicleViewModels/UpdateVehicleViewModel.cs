@@ -2,7 +2,7 @@
 using ParkingLotManager.WebApi.Models;
 using System.ComponentModel;
 
-namespace ParkingLotManager.WebApi.ViewModels;
+namespace ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 
 public class UpdateVehicleViewModel
 {
@@ -22,7 +22,7 @@ public class UpdateVehicleViewModel
         foreach (var prop in props)
         {
             var value = prop.GetValue(viewModel);
-            if (value == "" || (prop.PropertyType.IsValueType && value.Equals(Activator.CreateInstance(prop.PropertyType))))
+            if (value == "" || prop.PropertyType.IsValueType && value.Equals(Activator.CreateInstance(prop.PropertyType)))
                 count++;
         }
 
