@@ -14,6 +14,7 @@ public class Company
     public int MotorcycleSlots { get; private set; }
 
     public IList<Vehicle>? Vehicles { get; private set; }
+    public IList<User>? Users { get; private set; }
 
     public void Create(RegisterCompanyViewModel viewModel)
     {
