@@ -42,7 +42,7 @@ public class CompanyController : ControllerBase
     {
         try
         {
-            var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == name);
+            var company = await _ctx.Companies.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
             if (company == null)
                 return NotFound(new { message = "05EX5002 - Company not found." });
 
@@ -55,7 +55,7 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost("v1/companies")]
-    public async Task<IActionResult> RegisterCompanyAsync([FromBody] RegisterCompanyViewModel viewModel)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterCompanyViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<RegisterCompanyViewModel>(ModelState.GetErrors()));
@@ -79,7 +79,32 @@ public class CompanyController : ControllerBase
         }
     }
 
-    [HttpPut("v1/companies")]
+    [HttpPut("v1/companies/{name}")]
+    public async Task<IActionResult> Update([FromRoute] string name, [FromBody] UpdateCompanyViewModel viewModel)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ResultViewModel<UpdateCompanyViewModel>(ModelState.GetErrors()));
+        
+        try
+        {
+            var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == name);
+            if (company == null)
+                return NotFound(new ResultViewModel<UpdateCompanyViewModel>("05EX5007 - Company not found"));
+            company.Update(viewModel);
+            _ctx.Update(company);
+            await _ctx.SaveChangesAsync();
+
+            return Ok(new ResultViewModel<Company>(company));
+        }
+        catch (DbException)
+        {
+            return StatusCode(500, new ResultViewModel<List<Company>>("05EX5007 - Could not update company"));
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new ResultViewModel<List<Company>>("05EX5008 - Internal server error"));
+        }
+    }
 
     [HttpDelete("v1/companies/{name}")]
     public async Task<IActionResult> Delete([FromRoute] string name)
