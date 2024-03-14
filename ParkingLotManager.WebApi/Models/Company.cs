@@ -4,18 +4,20 @@ namespace ParkingLotManager.WebApi.Models;
 
 public class Company
 {
-    private Company() 
-    { }
+    //private Company() 
+    //{ }
 
-    public Company(string name)
-    {
-        Name = name;
-    }
+    //public Company(string name)
+    //{
+    //    Name = name;
+    //}
 
     public string Name { get; private set; }
     public Cnpj Cnpj { get; private set; }
     public Address Address { get; private set; }
     public string Telephone { get; private set; }
-    
+    public int CarSlots { get; private set; }
+    public int MotorcycleSlots { get; private set; }
+
     public IList<Vehicle> Vehicles { get; private set; }
 }
