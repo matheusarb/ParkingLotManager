@@ -3,14 +3,14 @@
 public class Cnpj : ValueObject
 {
     private Cnpj()
-    {}
+    { }
 
     public Cnpj(string cnpjNumber)
     {
-        CnpjNumber = cnpjNumber;
-        
-        if(string.IsNullOrEmpty(CnpjNumber))
-            throw new Exception("Please type your CNPJ number");
+        CnpjNumber = cnpjNumber.Replace(".", "").Replace("/", "").Replace("-", "");
+
+        if (string.IsNullOrEmpty(CnpjNumber))
+            throw new Exception("Type CNPJ number");
         if (!IsValid)
             throw new Exception("Invalid CNPJ");
     }
