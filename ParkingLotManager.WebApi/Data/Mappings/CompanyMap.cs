@@ -13,6 +13,7 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 
         // Primary Key
         builder.HasKey(x => x.Name);
+
         builder.Property(x => x.Name)
             .IsRequired()
             .HasColumnName("Name")
