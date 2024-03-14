@@ -11,8 +11,11 @@ public class Cnpj : ValueObject
     {
         CnpjNumber = cnpjNumber.Replace(".", "").Replace("/", "").Replace("-", "");
 
-        if (!IsValid)
-            throw new Exception("Invalid CNPJ");
+        if(!cnpjNumber.IsNullOrEmpty())
+        {
+            if (!IsValid)
+                throw new Exception("Invalid CNPJ");
+        }
     }
 
     public string CnpjNumber { get; }
