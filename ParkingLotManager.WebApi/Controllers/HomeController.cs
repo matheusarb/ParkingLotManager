@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ParkingLotManager.WebApi.Models;
+using ParkingLotManager.WebApi.ViewModels;
 using System.Text.Json.Serialization;
 
 namespace ParkingLotManager.WebApi.Controllers;
@@ -7,12 +9,16 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class HomeController : ControllerBase
 {
     [HttpGet]
-    [Route("")]
+    [Route("status-check")]
     public IActionResult CheckStatus()
-    { 
-        return Ok(new
+    {
+        try
         {
-            message = "API online"
-        });
+            return Ok(new { message = "API is online" });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { message = "00EX0000 - Internal server error" });
+        }        
     }
 }
