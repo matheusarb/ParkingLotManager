@@ -17,14 +17,14 @@ public class Vehicle
     public Company? Company { get; private set; }
     public string CompanyName { get; private set; }
 
-    public void Create(RegisterVehicleViewModel viewModel, Vehicle vehicle)
+    public void Create(RegisterVehicleViewModel viewModel)
     {
-        vehicle.LicensePlate = viewModel.LicensePlate;
-        vehicle.Model = viewModel.Model;
-        vehicle.Brand = viewModel.Brand;
-        vehicle.Color = viewModel.Color;
-        vehicle.Type = viewModel.Type;
-        vehicle.CompanyName = viewModel.CompanyName;
+        LicensePlate = viewModel.LicensePlate;
+        Model = viewModel.Model;
+        Brand = viewModel.Brand;
+        Color = viewModel.Color;
+        Type = viewModel.Type;
+        CompanyName = viewModel.CompanyName;
     }
     
     public void Update(UpdateVehicleViewModel viewModel, Vehicle vehicle)
