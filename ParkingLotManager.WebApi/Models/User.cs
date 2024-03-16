@@ -1,4 +1,5 @@
-﻿using ParkingLotManager.WebApi.ViewModels.UserViewModels;
+﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.ViewModels.UserViewModels;
 using SecureIdentity.Password;
 
 namespace ParkingLotManager.WebApi.Models;
@@ -26,10 +27,10 @@ public class User
         CompanyName = viewModel.CompanyName;
     }
 
-    public void Update(UpdateUserViewModel viewModel, User user)
+    public void Update(UpdateUserViewModel viewModel)
     {
-        throw new NotImplementedException();
+        Name = viewModel.Name.IsNullOrEmpty() ? Name : viewModel.Name;
+        Email = viewModel.Email.IsNullOrEmpty() ? Email : viewModel.Email;
+        PasswordHash = viewModel.PasswordHash.IsNullOrEmpty() ? PasswordHash : viewModel.PasswordHash;
     }
-
-
 }
