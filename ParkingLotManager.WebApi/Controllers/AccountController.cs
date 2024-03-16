@@ -20,29 +20,43 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
-    private readonly TokenService _tokenService;
 
     public AccountController(TokenService tokenService, AppDataContext ctx)
-    {
-        _ctx = ctx;
-        _tokenService = tokenService;
-    }
+        => _ctx = ctx;
 
     [HttpPost("v1/accounts/login")]
-    public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel)
+    public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, [FromServices] TokenService tokenService)
     {
         if(!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
         try
         {
-            //var user = _ctx.Users.AsNoTracking().Include(x => x.)
+            var user = await _ctx
+                .Users
+                .AsNoTracking()
+                .Include(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.Email == viewModel.Email);
+            
+            if (user == null)
+                return StatusCode(401, new ResultViewModel<string>("06EX6000 - Invalid user or password"));
+            if(!PasswordHasher.Verify(user.PasswordHash, viewModel.Password))
+                return StatusCode(401, new ResultViewModel<string>("06EX6000 - Invalid user or password"));
+
+            try
+            {
+                // Send token
+                var token = tokenService.GenerateToken(user);
+                return Ok(new ResultViewModel<string>(token, null));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new ResultViewModel<List<User>>("06EX6001 - Internal server error"));
+            }
         }
         catch (Exception)
         {
-            throw;
+            return StatusCode(500, new ResultViewModel<List<User>>("06EX6001 - Internal server error"));
         }
-
-        return Ok(null);
     }
 
     [Authorize(Roles = "user")]
@@ -53,15 +67,14 @@ public class AccountController : ControllerBase
         {
             var users = await _ctx.Users.AsNoTracking().ToListAsync();
             if(users == null)
-                return BadRequest(new ResultViewModel<List<User>>("06EX6001 - Request could not be processed. Please try another time"));
+                return BadRequest(new ResultViewModel<List<User>>("06EX6002 - Request could not be processed. Please try another time"));
             return Ok(new ResultViewModel<List<User>>(users));
         }
         catch (Exception)
         {
-            return StatusCode(500, new ResultViewModel<List<User>>("06EX6002 - Internal server error"));
+            return StatusCode(500, new ResultViewModel<List<User>>("06EX6003 - Internal server error"));
         }
     }
-
 
     [Authorize(Roles = "admin")]
     [Authorize(Roles = "user")]
@@ -72,13 +85,13 @@ public class AccountController : ControllerBase
         {
             var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
-                return BadRequest(new ResultViewModel<User>("06EX6003 - User not found"));
+                return BadRequest(new ResultViewModel<User>("06EX6004 - User not found"));
             return Ok(new ResultViewModel<User>(user));
 
         }
         catch (Exception)
         {
-            return StatusCode(500, new ResultViewModel<User>("06EX6004 - Internal server error"));
+            return StatusCode(500, new ResultViewModel<User>("06EX6005 - Internal server error"));
         }
     }
 
@@ -102,12 +115,12 @@ public class AccountController : ControllerBase
         }
         catch (DbException)
         {
-            return StatusCode(400, new ResultViewModel<List<Company>>("06EX6005 - Email is already in use"));
+            return StatusCode(400, new ResultViewModel<List<Company>>("06EX6006 - Email is already in use"));
 
         }
         catch (Exception)
         {
-            return StatusCode(500, new ResultViewModel<List<Company>>("06EX5006 - Internal server error"));
+            return StatusCode(500, new ResultViewModel<List<Company>>("06EX5007 - Internal server error"));
         }
     }
 
