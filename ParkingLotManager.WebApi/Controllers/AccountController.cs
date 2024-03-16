@@ -22,7 +22,7 @@ public class AccountController : ControllerBase
     private readonly AppDataContext _ctx;
 
     public AccountController(TokenService tokenService, AppDataContext ctx)
-        => _ctx = ctx;
+        =>_ctx = ctx;
 
     [HttpPost("v1/accounts/login")]
     public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, [FromServices] TokenService tokenService)
@@ -96,7 +96,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("v1/accounts")]
-    public async Task<IActionResult> Create([FromBody] CreateUserViewModel viewModel)
+    public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
@@ -121,6 +121,34 @@ public class AccountController : ControllerBase
         catch (Exception)
         {
             return StatusCode(500, new ResultViewModel<List<Company>>("06EX5007 - Internal server error"));
+        }
+    }
+
+    [HttpPut("v1/accounts{id:int}")]
+    public async Task<IActionResult> Update([FromBody] UpdateUserViewModel viewModel, [FromQuery] int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
+        
+        try
+        {
+            var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(user==null)
+                return BadRequest(new ResultViewModel<string>("06EX6004 - Request could not be processed. Please try another time"));
+            
+            user.Update(viewModel);
+            _ctx.Update(user);
+            await _ctx.SaveChangesAsync();
+
+            return Ok(new ResultViewModel<User>(user));
+        }
+        catch(DbException)
+        {
+            return StatusCode(500, new ResultViewModel<string>("06EX6006 - Request could not be processed. Please try another time"));
+        }
+        catch
+        {
+            return StatusCode(500, new ResultViewModel<string>("06EX6007 - Internal server error"));
         }
     }
 
