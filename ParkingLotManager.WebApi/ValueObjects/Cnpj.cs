@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace ParkingLotManager.WebApi.Models.ValueObjects;
+namespace ParkingLotManager.WebApi.ValueObjects;
 
 public class Cnpj : ValueObject
 {
@@ -11,7 +11,7 @@ public class Cnpj : ValueObject
     {
         CnpjNumber = cnpjNumber.Replace(".", "").Replace("/", "").Replace("-", "");
 
-        if(!cnpjNumber.IsNullOrEmpty())
+        if (!cnpjNumber.IsNullOrEmpty())
         {
             if (!IsValid)
                 throw new Exception("Invalid CNPJ");
