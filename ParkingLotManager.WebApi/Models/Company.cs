@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using ParkingLotManager.WebApi.Models.ValueObjects;
+using ParkingLotManager.WebApi.ValueObjects;
 using ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
 
 namespace ParkingLotManager.WebApi.Models;
