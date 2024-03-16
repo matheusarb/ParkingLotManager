@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
 using System.Text.Json.Serialization;
@@ -20,5 +21,12 @@ public class HomeController : ControllerBase
         {
             return StatusCode(500, new { message = "00EX0000 - Internal server error" });
         }        
+    }
+
+    [HttpGet("")]
+    [ApiKey]
+    public IActionResult ValidateApiKey()
+    {
+        return Ok(new ResultViewModel<string>("Valid ApiKey", null));
     }
 }
