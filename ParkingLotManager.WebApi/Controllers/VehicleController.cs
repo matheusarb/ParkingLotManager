@@ -11,6 +11,7 @@ using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 namespace ParkingLotManager.WebApi.Controllers;
 
 [ApiController]
+[ApiKey]
 public class VehicleController : ControllerBase
 {
     private readonly AppDataContext _ctx;
@@ -21,7 +22,6 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet("v1/vehicles")]
-    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -42,7 +42,6 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet("v1/vehicles/{licensePlate}")]
-    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -120,6 +119,8 @@ public class VehicleController : ControllerBase
     }
 
     [HttpDelete("v1/vehicles/{licensePlate}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete([FromRoute] string licensePlate)
     {        
         try

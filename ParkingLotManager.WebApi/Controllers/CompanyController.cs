@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
@@ -11,6 +12,7 @@ using System.Data.Common;
 namespace ParkingLotManager.WebApi.Controllers;
 
 [ApiController]
+[ApiKey]
 public class CompanyController : ControllerBase
 {
     private readonly AppDataContext _ctx;
@@ -19,6 +21,9 @@ public class CompanyController : ControllerBase
         => _ctx = ctx;
 
     [HttpGet("v1/companies")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAsync([FromServices] AppDataContext ctx)
     {
         try
@@ -36,6 +41,9 @@ public class CompanyController : ControllerBase
     }
 
     [HttpGet("v1/companies/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAsyncByName([FromRoute] string name)
     {
         try
@@ -53,6 +61,9 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost("v1/companies")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterCompanyViewModel viewModel)
     {
         if (!ModelState.IsValid)
@@ -78,6 +89,9 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPut("v1/companies/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update([FromRoute] string name, [FromBody] UpdateCompanyViewModel viewModel)
     {
         if (!ModelState.IsValid)
@@ -105,6 +119,9 @@ public class CompanyController : ControllerBase
     }
 
     [HttpDelete("v1/companies/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete([FromRoute] string name)
     {
         try

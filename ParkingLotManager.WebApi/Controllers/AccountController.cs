@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
@@ -17,6 +18,7 @@ namespace ParkingLotManager.WebApi.Controllers;
 
 
 [ApiController]
+[ApiKey]
 public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
@@ -25,6 +27,9 @@ public class AccountController : ControllerBase
         =>_ctx = ctx;
 
     [HttpPost("v1/accounts/login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, [FromServices] TokenService tokenService)
     {
         if(!ModelState.IsValid)
@@ -59,8 +64,10 @@ public class AccountController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "user")]
     [HttpGet("v1/accounts")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAsync()
     {
         try
@@ -79,6 +86,9 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "admin")]
     [Authorize(Roles = "user")]
     [HttpGet("v1/accounts/{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
         try
@@ -96,6 +106,9 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("v1/accounts")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel)
     {
         if (!ModelState.IsValid)
@@ -125,6 +138,9 @@ public class AccountController : ControllerBase
     }
 
     [HttpPut("v1/accounts{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update([FromBody] UpdateUserViewModel viewModel, [FromQuery] int id)
     {
         if (!ModelState.IsValid)
@@ -152,7 +168,30 @@ public class AccountController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "admin")]
-    [HttpGet("v1/admin")]
-    public IActionResult GetAdmin() => Ok(User.Identity.Name);
+    [HttpDelete("v1/accounts{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Delete([FromQuery] int id)
+    {
+        try
+        {
+            var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null)
+                return BadRequest(new ResultViewModel<string>("06EX6008 - Request could not be processed. Please try another time"));
+            
+            _ctx.Remove(user);
+            await _ctx.SaveChangesAsync();
+
+            return Ok(new ResultViewModel<User>(user));
+        }
+        catch (DbException)
+        {
+            return StatusCode(500, new ResultViewModel<string>("06EX6009 - Request could not be processed. Please try another time"));
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new ResultViewModel<string>("06EX6010 - Internal server error"));
+        }
+    }
 }
