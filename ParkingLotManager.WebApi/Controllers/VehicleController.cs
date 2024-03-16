@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
@@ -20,6 +21,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet("v1/vehicles")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -40,6 +42,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet("v1/vehicles/{licensePlate}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
