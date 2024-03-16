@@ -70,7 +70,7 @@ public class VehicleController : ControllerBase
         try
         {
             var newVehicle = new Vehicle();
-            newVehicle.Create(viewModel, newVehicle);
+            newVehicle.Create(viewModel);
             await _ctx.Vehicles.AddAsync(newVehicle);
             await _ctx.SaveChangesAsync();
 
