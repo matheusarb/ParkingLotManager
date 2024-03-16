@@ -1,5 +1,5 @@
 ﻿using ParkingLotManager.WebApi.Models;
-using ParkingLotManager.WebApi.Models.ValueObjects;
+using ParkingLotManager.WebApi.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParkingLotManager.WebApi.ViewModels.CompanyViewModels;

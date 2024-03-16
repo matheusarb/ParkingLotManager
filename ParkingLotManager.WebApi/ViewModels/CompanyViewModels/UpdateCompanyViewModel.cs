@@ -1,4 +1,4 @@
-﻿using ParkingLotManager.WebApi.Models.ValueObjects;
+﻿using ParkingLotManager.WebApi.ValueObjects;
 using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 using System.ComponentModel.DataAnnotations;
 
