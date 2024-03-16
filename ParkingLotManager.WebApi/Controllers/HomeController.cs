@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
@@ -10,7 +11,7 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class HomeController : ControllerBase
 {
     [HttpGet]
-    [Route("status-check")]
+    [Route("home/status-check")]
     public IActionResult CheckStatus()
     {
         try
@@ -23,7 +24,7 @@ public class HomeController : ControllerBase
         }        
     }
 
-    [HttpGet("")]
+    [HttpGet("/home/validate-api-key")]
     [ApiKey]
     public IActionResult ValidateApiKey()
     {
