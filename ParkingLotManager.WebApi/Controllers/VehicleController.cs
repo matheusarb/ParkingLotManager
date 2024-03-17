@@ -189,7 +189,7 @@ public class VehicleController : ControllerBase
             if (vehicle == null)
                 return NotFound(new ResultViewModel<Vehicle>("01EX3000 - Vehicle not found."));
 
-            vehicle.Update(viewModel, vehicle);
+            vehicle.Update(viewModel);
             _ctx.Update(vehicle);
             await _ctx.SaveChangesAsync();
 
