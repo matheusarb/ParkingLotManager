@@ -8,6 +8,7 @@ using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
 using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
+using System.Data.Common;
 
 namespace ParkingLotManager.WebApi.Controllers;
 
@@ -78,6 +79,39 @@ public class VehicleController : ControllerBase
         catch
         {
             return StatusCode(500, new ResultViewModel<Vehicle>("01EX1003 - Internal server error"));
+        }
+    }
+
+    /// <summary>
+    /// get collection of vehicles of ford's brand
+    /// </summary>
+    /// <param name="apiKey">API key</param>
+    /// <returns>collection of Ford vehicles</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
+    [HttpGet("v1/vehicles/ford")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetIfBrandIsFordAsync([FromQuery(Name = apiKeyName)] string apiKey)
+    {
+        try
+        {
+            var fordVehicles = await _ctx.Vehicles
+                .Where(x => x.Brand == "Ford")
+                .AsNoTracking()
+                .ToListAsync();
+            if (fordVehicles == null)
+                return NotFound(new ResultViewModel<string>("01EX1004 - Request could not be processed. Please try again another time"));
+
+            return Ok(new ResultViewModel<List<Vehicle>>(fordVehicles));
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new ResultViewModel<Vehicle>("01EX1005 - Internal server error"));
         }
     }
 
