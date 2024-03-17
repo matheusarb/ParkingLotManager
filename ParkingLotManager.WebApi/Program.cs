@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ParkingLotManager.WebApi;
 using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.Models;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 ConfigureAuthentication(builder);
+ConfigureSwaggerApi(builder);
 ConfigureServices(builder);
 ConfigureMvc(builder);
 
@@ -54,12 +56,34 @@ static void ConfigureAuthentication(WebApplicationBuilder builder)
     });
 }
 
-static void ConfigureServices(WebApplicationBuilder builder)
-{    
+static void ConfigureSwaggerApi(WebApplicationBuilder builder)
+{
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(x =>
+    {
+        x.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Parking Lot Manager API",
+            Description = @"A sample ASP.NET Core Web API to manage CRUD operations
+            on a Parking Lot Management context and other few things",
+            Contact =
+            {
+                Name = "Matheus Ribeiro",
+                Email = "mat.araujoribeiro@gmail.com",
+                Url = new Uri("https://github.com/matheusarb")
+            },
+            License = new OpenApiLicense
+            {
+                Name = "Mit License"
+            },
+            Version = "v1"
+        });
+    });
+}
 
+static void ConfigureServices(WebApplicationBuilder builder)
+{
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<AppDataContext>(options => options.UseSqlServer(connectionString));
     
