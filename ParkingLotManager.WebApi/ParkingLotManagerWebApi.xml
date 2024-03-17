@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParkingLotManager.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.GetAsync(System.String)">
+            <summary>
+            get collection of registered companies
+            </summary>
+            <returns>registered companies data</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.GetAsyncByName(System.String,System.String)">
+            <summary>
+            get company by name
+            </summary>
+            <param name="name">company name</param>
+            <param name="apiKeyName">API Key</param>
+            <returns>company data</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.RegisterAsync(ParkingLotManager.WebApi.ViewModels.CompanyViewModels.RegisterCompanyViewModel,System.String)">
+            <summary>
+            register a new company
+            </summary>
+            <remarks>
+            {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
+            </remarks>
+            <param name="viewModel">company ViewModel</param>
+            <param name="apiKeyName">API Key</param>
+            <returns>data from the new company</returns>
+            <response code="201">Created</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.Update(System.String,ParkingLotManager.WebApi.ViewModels.CompanyViewModels.UpdateCompanyViewModel,System.String)">
+            <summary>
+            update a company
+            </summary>
+            <remarks>
+            {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
+            </remarks>
+            <param name="name">company name</param>
+            <param name="viewModel">company UpdateViewModel</param>
+            <returns>company and its updated data</returns>
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.Delete(System.String,System.String)">
+            <summary>
+            delete a company
+            </summary>
+            <param name="name">company name</param>
+            <returns>deleted company</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetAsync(System.String)">
+            <summary>
+            get collection of vehicles
+            </summary>
+            <returns>collection of vehicles</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetByLicensePlateAsync(System.String,System.String)">
+            <summary>
+            get vehicle by licensePlate
+            </summary>
+            <returns>vehicle data by licensePlate</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.RegisterAsync(ParkingLotManager.WebApi.ViewModels.VehicleViewModels.RegisterVehicleViewModel,System.String)">
+            <summary>
+            register a new vehicle
+            </summary>
+            <remarks>
+            {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
+            </remarks>
+            <returns>new vehicle data</returns>
+            <response code="201">Created</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.Update(System.String,ParkingLotManager.WebApi.ViewModels.VehicleViewModels.UpdateVehicleViewModel,System.String)">
+            <summary>
+            update data of a registered vehicle
+            </summary>
+            <returns>updated data of vehicle</returns>
+            <remarks>
+            {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
+            </remarks>
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.Delete(System.String,System.String)">
+            <summary>
+            delete vehicle by licensePlate
+            </summary>
+            <returns>data of deleted vehicle</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.DatabaseCreation">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.DatabaseCreation.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.DatabaseCreation.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.DatabaseCreation.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.FixFKCompanyName">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixFKCompanyName.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixFKCompanyName.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixFKCompanyName.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.FixSqlDefaultCreatedAtDate">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixSqlDefaultCreatedAtDate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixSqlDefaultCreatedAtDate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.FixSqlDefaultCreatedAtDate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.AddSlotsProperties">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddSlotsProperties.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddSlotsProperties.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddSlotsProperties.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.CreateUserTable">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateUserTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateUserTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateUserTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.AddUserRoleRelationship">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddUserRoleRelationship.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddUserRoleRelationship.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.AddUserRoleRelationship.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

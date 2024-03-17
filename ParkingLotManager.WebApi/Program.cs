@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using ParkingLotManager.WebApi;
 using ParkingLotManager.WebApi.Data;
@@ -14,8 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 ConfigureAuthentication(builder);
-ConfigureSwaggerApi(builder);
 ConfigureServices(builder);
+ConfigureSwaggerApi(builder);
 ConfigureMvc(builder);
 
 var app = builder.Build();
@@ -35,7 +36,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
 
 static void ConfigureAuthentication(WebApplicationBuilder builder)
 {
@@ -67,11 +67,11 @@ static void ConfigureSwaggerApi(WebApplicationBuilder builder)
             Title = "Parking Lot Manager API",
             Description = @"A sample ASP.NET Core Web API to manage CRUD operations
             on a Parking Lot Management context and other few things",
-            Contact =
+            Contact = new OpenApiContact
             {
                 Name = "Matheus Ribeiro",
                 Email = "mat.araujoribeiro@gmail.com",
-                Url = new Uri("https://github.com/matheusarb")
+                Url = new Uri("https://www.linkedin.com/in/matheusarb/")
             },
             License = new OpenApiLicense
             {
@@ -79,6 +79,10 @@ static void ConfigureSwaggerApi(WebApplicationBuilder builder)
             },
             Version = "v1"
         });
+
+        var xmlFile = "ParkingLotManagerWebApi.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        x.IncludeXmlComments(xmlPath);
     });
 }
 
@@ -100,5 +104,8 @@ static void ConfigureMvc(WebApplicationBuilder builder)
 
 static void LoadConfiguration(WebApplication app)
 {
-    Configuration.ApiKey = app.Configuration.GetValue<string>("ApiKey");
+    //Configuration.ApiKey = app.Configuration.GetValue<string>("ApiKey");
+
+    var apiKey = Configuration.ApiKey;
+    apiKey = app.Configuration.GetValue<string>("ApiKey");
 }
