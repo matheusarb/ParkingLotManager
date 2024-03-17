@@ -87,7 +87,7 @@
             <response code="404">Not Found</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetWhereBrandIsFord(System.String)">
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetIfBrandIsFordAsync(System.String)">
             <summary>
             get collection of vehicles of ford's brand
             </summary>
