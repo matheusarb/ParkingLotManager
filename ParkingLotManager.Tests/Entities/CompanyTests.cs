@@ -24,6 +24,4 @@ public class CompanyTests
        
        Assert.IsTrue(_company != null);
     }
-
-
 }
