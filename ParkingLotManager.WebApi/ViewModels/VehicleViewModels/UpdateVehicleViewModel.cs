@@ -6,6 +6,20 @@ namespace ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 
 public class UpdateVehicleViewModel
 {
+    public UpdateVehicleViewModel()
+    {        
+    }
+
+    public UpdateVehicleViewModel(string? licensePlate, string? brand, string? model, string? color, EVehicleType type, string? companyName)
+    {
+        LicensePlate = licensePlate;
+        Brand = brand;
+        Model = model;
+        Color = color;
+        Type = type;
+        CompanyName = companyName;
+    }
+
     public string? LicensePlate { get; set; }
     public string? Brand { get; set; }
     public string? Model { get; set; }
