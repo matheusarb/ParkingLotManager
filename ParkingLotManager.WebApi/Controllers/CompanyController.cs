@@ -61,7 +61,7 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost("v1/companies")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterCompanyViewModel viewModel)

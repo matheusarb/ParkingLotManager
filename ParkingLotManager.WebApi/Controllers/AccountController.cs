@@ -106,7 +106,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("v1/accounts")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel)
