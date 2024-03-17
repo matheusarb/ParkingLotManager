@@ -87,6 +87,17 @@
             <response code="404">Not Found</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetWhereBrandIsFord(System.String)">
+            <summary>
+            get collection of vehicles of ford's brand
+            </summary>
+            <param name="apiKey">API key</param>
+            <returns>collection of Ford vehicles</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.RegisterAsync(ParkingLotManager.WebApi.ViewModels.VehicleViewModels.RegisterVehicleViewModel,System.String)">
             <summary>
             register a new vehicle
