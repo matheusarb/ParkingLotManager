@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
@@ -16,19 +17,29 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class CompanyController : ControllerBase
 {
     private readonly AppDataContext _ctx;
+    private const string apiKeyName = Configuration.ApiKeyName;
 
     public CompanyController(AppDataContext ctx)
         => _ctx = ctx;
 
-    [HttpGet("v1/companies")]
+    /// <summary>
+    /// get collection of registered companies
+    /// </summary>
+    /// <returns>registered companies data</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
+    [HttpGet("v1/companies/")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync([FromServices] AppDataContext ctx)
+    public async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
-            var companies = await ctx.Companies.AsNoTracking().ToListAsync();
+            var companies = await _ctx.Companies.AsNoTracking().ToListAsync();
             if (companies == null)
                 return BadRequest(new { message = "05EX5000 - Request could not be processed. Please try another time" });
 
@@ -40,11 +51,24 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// get company by name
+    /// </summary>
+    /// <param name="name">company name</param>
+    /// <param name="apiKeyName">API Key</param>
+    /// <returns>company data</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/companies/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsyncByName([FromRoute] string name)
+    public async Task<IActionResult> GetAsyncByName(
+        [FromRoute] string name,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
@@ -60,11 +84,27 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// register a new company
+    /// </summary>
+    /// <remarks>
+    /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
+    /// </remarks>
+    /// <param name="viewModel">company ViewModel</param>
+    /// <param name="apiKeyName">API Key</param>
+    /// <returns>data from the new company</returns>
+    /// <response code="201">Created</response>
+    /// <response code="400">Bad Request</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpPost("v1/companies")]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegisterCompanyViewModel viewModel)
+    public async Task<IActionResult> RegisterAsync(
+        [FromBody] RegisterCompanyViewModel viewModel,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<RegisterCompanyViewModel>(ModelState.GetErrors()));
@@ -88,11 +128,28 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// update a company
+    /// </summary>
+    /// <remarks>
+    /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
+    /// </remarks>
+    /// <param name="name">company name</param>
+    /// <param name="viewModel">company UpdateViewModel</param>
+    /// <returns>company and its updated data</returns>
+    /// <response code="200">Success</response>
+    /// <response code="400">Bad Request</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpPut("v1/companies/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update([FromRoute] string name, [FromBody] UpdateCompanyViewModel viewModel)
+    public async Task<IActionResult> Update(
+        [FromRoute] string name,
+        [FromBody] UpdateCompanyViewModel viewModel,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<UpdateCompanyViewModel>(ModelState.GetErrors()));
@@ -118,11 +175,23 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// delete a company
+    /// </summary>
+    /// <param name="name">company name</param>
+    /// <returns>deleted company</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpDelete("v1/companies/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete([FromRoute] string name)
+    public async Task<IActionResult> Delete(
+        [FromRoute] string name,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {

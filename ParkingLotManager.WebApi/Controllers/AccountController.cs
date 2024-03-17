@@ -23,7 +23,7 @@ public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
 
-    public AccountController(TokenService tokenService, AppDataContext ctx)
+    public AccountController(AppDataContext ctx)
         =>_ctx = ctx;
 
     [HttpPost("v1/accounts/login")]

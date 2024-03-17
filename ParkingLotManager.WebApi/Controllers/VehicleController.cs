@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
@@ -15,17 +16,25 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class VehicleController : ControllerBase
 {
     private readonly AppDataContext _ctx;
+    private const string apiKeyName = Configuration.ApiKeyName;
 
     public VehicleController(AppDataContext ctx)
-    {
-        _ctx = ctx;
-    }
+        => _ctx = ctx;
 
+    /// <summary>
+    /// get collection of vehicles
+    /// </summary>
+    /// <returns>collection of vehicles</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/vehicles")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
@@ -41,11 +50,22 @@ public class VehicleController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// get vehicle by licensePlate
+    /// </summary>
+    /// <returns>vehicle data by licensePlate</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/vehicles/{licensePlate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetByLicensePlateAsync([FromRoute] string licensePlate)
+    public async Task<IActionResult> GetByLicensePlateAsync(
+        [FromRoute] string licensePlate,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
@@ -57,15 +77,29 @@ public class VehicleController : ControllerBase
         }
         catch
         {
-            return StatusCode(500, new ResultViewModel<Vehicle> ("01EX1003 - Internal server error"));
+            return StatusCode(500, new ResultViewModel<Vehicle>("01EX1003 - Internal server error"));
         }
     }
 
+    /// <summary>
+    /// register a new vehicle
+    /// </summary>
+    /// <remarks>
+    /// {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
+    /// </remarks>
+    /// <returns>new vehicle data</returns>
+    /// <response code="201">Created</response>
+    /// <response code="400">Bad Request</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpPost("v1/vehicles")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegisterVehicleViewModel viewModel)
+    public async Task<IActionResult> RegisterAsync(
+        [FromBody] RegisterVehicleViewModel viewModel,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<RegisterVehicleViewModel>(ModelState.GetErrors()));
@@ -89,11 +123,26 @@ public class VehicleController : ControllerBase
 
     }
 
+    /// <summary>
+    /// update data of a registered vehicle
+    /// </summary>
+    /// <returns>updated data of vehicle</returns>
+    /// <remarks>
+    /// {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
+    /// </remarks>
+    /// <response code="200">Success</response>
+    /// <response code="400">Bad Request</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpPut("v1/vehicles/{licensePlate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update([FromRoute] string licensePlate, [FromBody] UpdateVehicleViewModel viewModel)
+    public async Task<IActionResult> Update(
+        [FromRoute] string licensePlate,
+        [FromBody] UpdateVehicleViewModel viewModel,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         if (viewModel.CheckIfAllEmpty(viewModel))
             return BadRequest(new ResultViewModel<UpdateVehicleViewModel>("Cannot update infos if all values are empty"));
@@ -118,16 +167,28 @@ public class VehicleController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// delete vehicle by licensePlate
+    /// </summary>
+    /// <returns>data of deleted vehicle</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Not Found</response>
+    /// <response code="500">Internal Server Error</response>
     [HttpDelete("v1/vehicles/{licensePlate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete([FromRoute] string licensePlate)
-    {        
+    public async Task<IActionResult> Delete(
+        [FromRoute] string licensePlate,
+        [FromQuery(Name = apiKeyName)] string apiKeyName)
+    {
         try
         {
             var vehicle = await _ctx.Vehicles.FirstOrDefaultAsync(x => x.LicensePlate == licensePlate);
             if (vehicle == null)
-                return NotFound(new ResultViewModel<Vehicle>( "01EX4000 - Vehicle not found." ));
+                return NotFound(new ResultViewModel<Vehicle>("01EX4000 - Vehicle not found."));
 
             _ctx.Vehicles.Remove(vehicle);
             await _ctx.SaveChangesAsync();

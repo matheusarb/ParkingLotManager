@@ -26,6 +26,8 @@ public class HomeController : ControllerBase
 
     [HttpGet("/home/validate-api-key")]
     [ApiKey]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult ValidateApiKey()
     {
         return Ok(new ResultViewModel<string>("Valid ApiKey", null));
