@@ -27,14 +27,14 @@ public class Vehicle
         CompanyName = viewModel.CompanyName;
     }
     
-    public void Update(UpdateVehicleViewModel viewModel, Vehicle vehicle)
+    public void Update(UpdateVehicleViewModel viewModel)
     {
-        vehicle.LicensePlate = viewModel.LicensePlate.IsNullOrEmpty() ? vehicle.LicensePlate : viewModel.LicensePlate;
-        vehicle.Brand = viewModel.Brand.IsNullOrEmpty() ? vehicle.Brand : viewModel.Brand;
-        vehicle.Model = viewModel.Model.IsNullOrEmpty() ? vehicle.Model : viewModel.Model;
-        vehicle.Color = viewModel.Color.IsNullOrEmpty() ? vehicle.Color : viewModel.Color;
-        vehicle.Type = viewModel.Type != vehicle.Type ? viewModel.Type : vehicle.Type;
-        vehicle.CompanyName = viewModel.CompanyName.IsNullOrEmpty() ? vehicle.CompanyName : viewModel.CompanyName;
+        LicensePlate = viewModel.LicensePlate.IsNullOrEmpty() ? LicensePlate : viewModel.LicensePlate;
+        Brand = viewModel.Brand.IsNullOrEmpty() ? Brand : viewModel.Brand;
+        Model = viewModel.Model.IsNullOrEmpty() ? Model : viewModel.Model;
+        Color = viewModel.Color.IsNullOrEmpty() ? Color : viewModel.Color;
+        Type = viewModel.Type != Type ? viewModel.Type : Type;
+        CompanyName = viewModel.CompanyName.IsNullOrEmpty() ? CompanyName : viewModel.CompanyName;
     }
 
     static void ChangeLicensePlate(string licensePlate, Vehicle vehicle)
