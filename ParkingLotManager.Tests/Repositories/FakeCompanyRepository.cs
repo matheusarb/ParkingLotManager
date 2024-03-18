@@ -9,10 +9,10 @@ namespace ParkingLotManager.Tests.Repositories;
 
 public class FakeCompanyRepository
 {
-    public Company Get(string name)
+    public string Get(string name)
     {
         if(name.Equals("companytest", StringComparison.OrdinalIgnoreCase))
-            return new Company();
+            return name;
         return null;
     }
 }
