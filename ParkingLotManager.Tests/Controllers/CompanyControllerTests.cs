@@ -1,4 +1,5 @@
 ﻿using ParkingLotManager.Tests.Repositories;
+using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ValueObjects;
 using ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
@@ -24,9 +25,16 @@ public class CompanyControllerTests
     private readonly FakeCompanyRepository _fakeCompanyRepository = new();
 
     [TestMethod]
+    public void Should_return_company_name_when_parameter_is_CompanyTest()
+    {
+        var companyName = _fakeCompanyRepository.Get("companytest");
+        Assert.AreEqual("companytest", companyName);
+    }
+
+    [TestMethod]
     public void Should_return_success_when_creating_company()
     {
         _company.Create(_registerCompanyViewModel);
-        Assert.IsTrue(!string.IsNullOrEmpty(_company.Name));
+        Assert.IsTrue(!_company.Name.IsNullOrEmptyOrWhiteSpace());
     }
 }
