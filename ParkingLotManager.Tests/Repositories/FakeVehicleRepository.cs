@@ -14,15 +14,15 @@ public class FakeVehicleRepository
     {
         if (licensePlate.Length != 7)
             return false;
-        if(licensePlate == "000AAAA")
+        if (licensePlate == "000AAAA")
             return true;
         return false;
     }
-    
+
     public List<Vehicle> GetAll(string route)
     {
         var list = new List<Vehicle>();
-        if(route == "v1/vehicles")
+        if (route == "v1/vehicles")
             return list;
         return null;
     }
@@ -33,3 +33,4 @@ public class FakeVehicleRepository
             return true;
         return false;
     }
+}
