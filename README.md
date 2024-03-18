@@ -23,3 +23,12 @@
 <p>
   + Extension methods for exception filtering 
 </p>
+<p>
+  + Unit testing 
+</p>
+<p>
+  + Database with SqlServer and EntityFramework Core 
+</p>
+<p>
+  + API Documentation 
+</p>
