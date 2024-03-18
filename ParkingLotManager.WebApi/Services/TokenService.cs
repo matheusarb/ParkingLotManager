@@ -4,10 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
 using ParkingLotManager.WebApi.Extensions;
+using ParkingLotManager.WebApi.Services.Contracts;
 
 namespace ParkingLotManager.WebApi.Services;
 
-public class TokenService
+public class TokenService : ITokenService
 {
     public string GenerateToken(User user)
     {
