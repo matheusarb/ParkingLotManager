@@ -1,8 +1,15 @@
-﻿namespace ParkingLotManager.WebApi.ViewModels.UserViewModels;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace ParkingLotManager.WebApi.ViewModels.UserViewModels;
 
 public class UpdateUserViewModel
 {
-    public string Name { get; private set; }
-    public string Email { get; private set; }
-    public string PasswordHash { get; private set; }
+    [JsonPropertyName("Email")]
+    [EmailAddress]
+    public string? Email { get; set; }
+    [JsonPropertyName("Name")]
+    public string? Name { get; set; }
+    [JsonPropertyName("PasswordHash")]
+    public string? PasswordHash { get; set; }
 }
