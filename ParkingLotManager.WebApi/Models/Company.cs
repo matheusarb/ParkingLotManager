@@ -1,10 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ValueObjects;
 using ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
 
 namespace ParkingLotManager.WebApi.Models;
 
-public class Company
+public class Company : ICompany
 {
     public string Name { get; private set; }
     public Cnpj Cnpj { get; private set; }

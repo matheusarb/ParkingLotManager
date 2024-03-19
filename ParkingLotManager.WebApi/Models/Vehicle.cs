@@ -1,10 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ParkingLotManager.WebApi.Enums;
+using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 
 namespace ParkingLotManager.WebApi.Models;
 
-public class Vehicle
+public class Vehicle : IVehicle
 {
     public string LicensePlate { get; private set; }
     public string Brand { get; private set; }
