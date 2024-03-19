@@ -1,10 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ViewModels.UserViewModels;
 using SecureIdentity.Password;
+using System.Xml;
 
 namespace ParkingLotManager.WebApi.Models;
 
-public class User
+public class User : IUser
 {
     public int Id { get; }
     public string Name { get; private set; }
@@ -15,7 +17,7 @@ public class User
     public Company? Company { get; private set; }
     public string CompanyName { get; private set; }
 
-    public IList<Role> Roles { get; set; }
+    public IList<Role>? Roles { get; set; }
 
     public void Create(CreateUserViewModel viewModel, string password)
     {
@@ -32,5 +34,15 @@ public class User
         Name = viewModel.Name.IsNullOrEmpty() ? Name : viewModel.Name;
         Email = viewModel.Email.IsNullOrEmpty() ? Email : viewModel.Email;
         PasswordHash = viewModel.PasswordHash.IsNullOrEmpty() ? PasswordHash : viewModel.PasswordHash;
+    }
+
+    public void CreateAdmin(CreateUserViewModel viewModel, string password)
+    {
+        Name = viewModel.Name;
+        Email = viewModel.Email;
+        PasswordHash = PasswordHasher.Hash(password);
+        Roles = new List<Role> { new Role() { Name = "admin", Slug = "admin" } };
+        Slug = viewModel.Email.Replace("@", "-").Replace(".", "-");
+        CompanyName = viewModel.CompanyName;
     }
 }
