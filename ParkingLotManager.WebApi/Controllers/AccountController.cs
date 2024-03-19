@@ -23,7 +23,7 @@ public class AccountController : ControllerBase
     private readonly AppDataContext _ctx;
 
     public AccountController(AppDataContext ctx)
-        =>_ctx = ctx;
+        => _ctx = ctx;
 
     /// <summary>
     /// login into system and generate Bearer Token
@@ -37,7 +37,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, [FromServices] TokenService tokenService)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
         try
         {
@@ -46,17 +46,17 @@ public class AccountController : ControllerBase
                 .AsNoTracking()
                 .Include(x => x.Roles)
                 .FirstOrDefaultAsync(x => x.Email == viewModel.Email);
-            
+
             if (user == null)
                 return StatusCode(401, new ResultViewModel<string>("06EX6000 - Invalid user or password"));
-            if(!PasswordHasher.Verify(user.PasswordHash, viewModel.Password))
+            if (!PasswordHasher.Verify(user.PasswordHash, viewModel.Password))
                 return StatusCode(401, new ResultViewModel<string>("06EX6000 - Invalid user or password"));
 
             try
             {
                 // Send token
                 var token = tokenService.GenerateToken(user);
-                return Ok(new ResultViewModel<string>(token, null));
+                return Ok(new JsonResult(token).Value);
             }
             catch (Exception)
             {
@@ -78,12 +78,12 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync([FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         try
         {
             var users = await _ctx.Users.AsNoTracking().ToListAsync();
-            if(users == null)
+            if (users == null)
                 return BadRequest(new ResultViewModel<List<User>>("06EX6002 - Request could not be processed. Please try another time"));
             return Ok(new ResultViewModel<List<User>>(users));
         }
@@ -103,11 +103,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         try
         {
-            var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
                 return BadRequest(new ResultViewModel<User>("06EX6004 - User not found"));
             return Ok(new ResultViewModel<User>(user));
@@ -129,7 +129,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel)
+    public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel, [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
@@ -143,7 +143,8 @@ public class AccountController : ControllerBase
 
             return Created($"v1/users/{user.Id}", new ResultViewModel<dynamic>(new
             {
-                user.Email, password
+                user.Email,
+                password
             }));
         }
         catch (DbException)
@@ -155,7 +156,7 @@ public class AccountController : ControllerBase
         {
             return StatusCode(500, new ResultViewModel<List<Company>>("06EX5007 - Internal server error"));
         }
-    }  
+    }
 
     /// <summary>
     /// updates a user by its id
@@ -163,29 +164,32 @@ public class AccountController : ControllerBase
     /// <param name="viewModel">viewModel to update user</param>
     /// <param name="id">user id</param>
     /// <returns>updated user</returns>
-    [HttpPut("v1/accounts{id:int}")]
+    [HttpPut("v1/accounts/{id:int}")]
     [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update([FromBody] UpdateUserViewModel viewModel, [FromQuery] int id)
+    public async Task<IActionResult> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateUserViewModel viewModel,
+        [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
-        
+
         try
         {
             var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if(user==null)
+            if (user == null)
                 return BadRequest(new ResultViewModel<string>("06EX6004 - Request could not be processed. Please try another time"));
-            
+
             user.Update(viewModel);
             _ctx.Update(user);
             await _ctx.SaveChangesAsync();
 
             return Ok(new ResultViewModel<User>(user));
         }
-        catch(DbException)
+        catch (DbException)
         {
             return StatusCode(500, new ResultViewModel<string>("06EX6006 - Request could not be processed. Please try another time"));
         }
@@ -200,19 +204,19 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <param name="id">user id</param>
     /// <returns>deleted user</returns>
-    [HttpDelete("v1/accounts{id:int}")]
+    [HttpDelete("v1/accounts/{id:int}")]
     [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete([FromQuery] int id)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     {
         try
         {
             var user = await _ctx.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if(user == null)
+            if (user == null)
                 return BadRequest(new ResultViewModel<string>("06EX6008 - Request could not be processed. Please try another time"));
-            
+
             _ctx.Remove(user);
             await _ctx.SaveChangesAsync();
 
@@ -234,10 +238,11 @@ public class AccountController : ControllerBase
     /// <param name="viewModel">viewModel to create admin</param>
     /// <returns>user with admin role</returns>
     [HttpPost("v1/accounts/admin")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateAdminAsync([FromBody]CreateUserViewModel viewModel)
+    public async Task<IActionResult> CreateAdminAsync([FromBody] CreateUserViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
@@ -246,7 +251,7 @@ public class AccountController : ControllerBase
             var user = new User();
             var password = PasswordGenerator.Generate(25);
             user.CreateAdmin(viewModel, password);
-            var userRole = user.Roles.Select(x => x.Name);
+            var userRole = user.Roles?.Select(x => x.Name);
             await _ctx.Users.AddAsync(user);
             await _ctx.SaveChangesAsync();
 
