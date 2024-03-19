@@ -18,7 +18,6 @@ namespace ParkingLotManager.WebApi.Controllers;
 
 
 [ApiController]
-[ApiKey]
 public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
@@ -26,6 +25,12 @@ public class AccountController : ControllerBase
     public AccountController(AppDataContext ctx)
         =>_ctx = ctx;
 
+    /// <summary>
+    /// login into system and generate Bearer Token
+    /// </summary>
+    /// <param name="viewModel">email and password</param>
+    /// <param name="tokenService">Bearer Token generator</param>
+    /// <returns>Bearer Token</returns>
     [HttpPost("v1/accounts/login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -64,7 +69,12 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// get collection of users
+    /// </summary>
+    /// <returns>collection of users</returns>
     [HttpGet("v1/accounts")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -83,9 +93,13 @@ public class AccountController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "admin")]
-    [Authorize(Roles = "user")]
+    /// <summary>
+    /// get user by id
+    /// </summary>
+    /// <param name="id">user id</param>
+    /// <returns>user</returns>
     [HttpGet("v1/accounts/{id:int}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -105,7 +119,13 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// creates a user with no role
+    /// </summary>
+    /// <param name="viewModel">viewModel to create user</param>
+    /// <returns>created user and its Uri</returns>
     [HttpPost("v1/accounts")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -135,9 +155,16 @@ public class AccountController : ControllerBase
         {
             return StatusCode(500, new ResultViewModel<List<Company>>("06EX5007 - Internal server error"));
         }
-    }
+    }  
 
+    /// <summary>
+    /// updates a user by its id
+    /// </summary>
+    /// <param name="viewModel">viewModel to update user</param>
+    /// <param name="id">user id</param>
+    /// <returns>updated user</returns>
     [HttpPut("v1/accounts{id:int}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -168,7 +195,13 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// deletes a user by its id
+    /// </summary>
+    /// <param name="id">user id</param>
+    /// <returns>deleted user</returns>
     [HttpDelete("v1/accounts{id:int}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -192,6 +225,46 @@ public class AccountController : ControllerBase
         catch (Exception)
         {
             return StatusCode(500, new ResultViewModel<string>("06EX6010 - Internal server error"));
+        }
+    }
+
+    /// <summary>
+    /// creates a user with admin role
+    /// </summary>
+    /// <param name="viewModel">viewModel to create admin</param>
+    /// <returns>user with admin role</returns>
+    [HttpPost("v1/accounts/admin")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateAdminAsync([FromBody]CreateUserViewModel viewModel)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
+        try
+        {
+            var user = new User();
+            var password = PasswordGenerator.Generate(25);
+            user.CreateAdmin(viewModel, password);
+            var userRole = user.Roles.Select(x => x.Name);
+            await _ctx.Users.AddAsync(user);
+            await _ctx.SaveChangesAsync();
+
+            return Created($"v1/users/admin/{user.Id}", new ResultViewModel<dynamic>(new
+            {
+                user.Email,
+                password,
+                userRole
+            }));
+        }
+        catch (DbException)
+        {
+            return StatusCode(400, new ResultViewModel<List<Company>>("06EX6006 - Email is already in use"));
+
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new ResultViewModel<List<Company>>("06EX5007 - Internal server error"));
         }
     }
 }
