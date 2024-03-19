@@ -5,12 +5,12 @@ namespace ParkingLotManager.WebApi.ViewModels.UserViewModels;
 public class CreateUserViewModel
 {
     [Required(ErrorMessage = "Name is required")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [EmailAddress]
     [Required(ErrorMessage = "Email is required")]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Company name is required")]
-    public string CompanyName { get; set; }
+    public string CompanyName { get; set; } = string.Empty;
 }
