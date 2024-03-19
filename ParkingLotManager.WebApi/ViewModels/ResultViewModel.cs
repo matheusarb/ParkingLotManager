@@ -25,6 +25,6 @@ public class ResultViewModel<T>
         Errors.Add(error);
     }
 
-    public T Data { get; private set; }
+    public T? Data { get; private set; }
     public List<string> Errors { get; private set; } = new();
 }
