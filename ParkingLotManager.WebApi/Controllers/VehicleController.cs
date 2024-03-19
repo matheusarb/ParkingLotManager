@@ -72,7 +72,7 @@ public class VehicleController : ControllerBase
     {
         try
         {
-            var vehicle = await _ctx.Vehicles.FirstOrDefaultAsync(x => x.LicensePlate == licensePlate);
+            var vehicle = await _ctx.Vehicles.AsNoTracking().FirstOrDefaultAsync(x => x.LicensePlate == licensePlate);
             if (vehicle is null)
                 return NotFound(new { message = "01EX1002 - License plate not found." });
 
@@ -102,10 +102,7 @@ public class VehicleController : ControllerBase
     {
         try
         {
-            var fordVehicles = await _ctx.Vehicles
-                .Where(x => x.Brand == "Ford")
-                .AsNoTracking()
-                .ToListAsync();
+            var fordVehicles = await _ctx.Vehicles.Where(x => x.Brand == "Ford").AsNoTracking().ToListAsync();
             if (fordVehicles == null)
                 return NotFound(new ResultViewModel<string>("01EX1004 - Request could not be processed. Please try again another time"));
 
@@ -149,11 +146,11 @@ public class VehicleController : ControllerBase
 
             return Created($"vehicles/v1/{newVehicle.LicensePlate}", new ResultViewModel<Vehicle>(newVehicle));
         }
-        catch (DbUpdateException ex)
+        catch (DbUpdateException)
         {
             return StatusCode(500, new ResultViewModel<Vehicle>("01EX2000 - Could not register vehicle"));
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(500, new ResultViewModel<Vehicle>("01EX2001 - Internal server error"));
         }
