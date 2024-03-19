@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,6 @@ using System.Data.Common;
 namespace ParkingLotManager.WebApi.Controllers;
 
 [ApiController]
-[ApiKey]
 public class VehicleController : ControllerBase
 {
     private readonly AppDataContext _ctx;
@@ -31,6 +31,7 @@ public class VehicleController : ControllerBase
     /// <response code="404">Not Found</response>
     /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/vehicles")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -60,6 +61,7 @@ public class VehicleController : ControllerBase
     /// <response code="404">Not Found</response>
     /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/vehicles/{licensePlate}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,20 +85,20 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// get collection of vehicles of ford's brand
+    /// get collection of Ford vehicles
     /// </summary>
-    /// <param name="apiKey">API key</param>
     /// <returns>collection of Ford vehicles</returns>
     /// <response code="200">Success</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="404">Not Found</response>
     /// <response code="500">Internal Server Error</response>
     [HttpGet("v1/vehicles/ford")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetIfBrandIsFordAsync([FromQuery(Name = apiKeyName)] string apiKey)
+    public async Task<IActionResult> GetIfBrandIsFordAsync()
     {
         try
         {
@@ -127,6 +129,7 @@ public class VehicleController : ControllerBase
     /// <response code="401">Unauthorized</response>
     /// <response code="500">Internal Server Error</response>
     [HttpPost("v1/vehicles")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -169,6 +172,7 @@ public class VehicleController : ControllerBase
     /// <response code="401">Unauthorized</response>
     /// <response code="500">Internal Server Error</response>
     [HttpPut("v1/vehicles/{licensePlate}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -210,6 +214,7 @@ public class VehicleController : ControllerBase
     /// <response code="404">Not Found</response>
     /// <response code="500">Internal Server Error</response>
     [HttpDelete("v1/vehicles/{licensePlate}")]
+    [ApiKey]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
