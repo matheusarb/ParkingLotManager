@@ -1,4 +1,6 @@
-﻿using ParkingLotManager.WebApi.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ParkingLotManager.WebApi.Models;
+using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ViewModels.VehicleViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ParkingLotManager.Tests.Repositories;
 
-public class FakeVehicleRepository
+public class FakeVehicleRepository : IVehicle
 {
     public bool Get(string licensePlate)
     {
@@ -32,5 +34,13 @@ public class FakeVehicleRepository
         if (brand.Equals("Ford", StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
+    }
+
+    public void Create(RegisterVehicleViewModel viewModel)
+    {
+    }
+
+    public void Update(UpdateVehicleViewModel viewModel)
+    {
     }
 }
