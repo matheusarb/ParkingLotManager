@@ -4,6 +4,56 @@
         <name>ParkingLotManager.WebApi</name>
     </assembly>
     <members>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Login(ParkingLotManager.WebApi.ViewModels.UserViewModels.LoginViewModel,ParkingLotManager.WebApi.Services.TokenService)">
+            <summary>
+            login into system and generate Bearer Token
+            </summary>
+            <param name="viewModel">email and password</param>
+            <param name="tokenService">Bearer Token generator</param>
+            <returns>Bearer Token</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.GetAsync(System.String)">
+            <summary>
+            get collection of users
+            </summary>
+            <returns>collection of users</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.GetByIdAsync(System.Int32,System.String)">
+            <summary>
+            get user by id
+            </summary>
+            <param name="id">user id</param>
+            <returns>user</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.CreateAsync(ParkingLotManager.WebApi.ViewModels.UserViewModels.CreateUserViewModel,System.String)">
+            <summary>
+            creates a user with no role
+            </summary>
+            <param name="viewModel">viewModel to create user</param>
+            <returns>created user and its Uri</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Update(System.Int32,ParkingLotManager.WebApi.ViewModels.UserViewModels.UpdateUserViewModel,System.String)">
+            <summary>
+            updates a user by its id
+            </summary>
+            <param name="viewModel">viewModel to update user</param>
+            <param name="id">user id</param>
+            <returns>updated user</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Delete(System.Int32)">
+            <summary>
+            deletes a user by its id
+            </summary>
+            <param name="id">user id</param>
+            <returns>deleted user</returns>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.CreateAdminAsync(ParkingLotManager.WebApi.ViewModels.UserViewModels.CreateUserViewModel)">
+            <summary>
+            creates a user with admin role
+            </summary>
+            <param name="viewModel">viewModel to create admin</param>
+            <returns>user with admin role</returns>
+        </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.GetAsync(System.String)">
             <summary>
             get collection of registered companies
@@ -50,6 +100,7 @@
             </remarks>
             <param name="name">company name</param>
             <param name="viewModel">company UpdateViewModel</param>
+            <param name="apiKeyName">API key</param>
             <returns>company and its updated data</returns>
             <response code="200">Success</response>
             <response code="400">Bad Request</response>
@@ -61,6 +112,7 @@
             delete a company
             </summary>
             <param name="name">company name</param>
+            <param name="apiKeyName">API key</param>
             <returns>deleted company</returns>
             <response code="200">Success</response>
             <response code="401">Unauthorized</response>
@@ -91,7 +143,6 @@
             <summary>
             get collection of Ford vehicles
             </summary>
-            <param name="apiKey">API key</param>
             <returns>collection of Ford vehicles</returns>
             <response code="200">Success</response>
             <response code="401">Unauthorized</response>
