@@ -18,9 +18,12 @@ public class CompanyControllerTests
 {
     private readonly Company _company = new();
     private readonly RegisterCompanyViewModel _registerCompanyViewModel = new(
-        "CompanyName", new Cnpj("76336280000175"),
+        "CompanyName",
+        new Cnpj("76336280000175"),
         new Address("StreetTest", "CityTest", "ZipCodeTest"),
-        "71999999999", 10, 10);
+        "71999999999",
+        10,
+        10);
 
     private readonly FakeCompanyRepository _fakeCompanyRepository = new();
 
