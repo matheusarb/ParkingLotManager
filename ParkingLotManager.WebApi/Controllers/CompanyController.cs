@@ -136,6 +136,7 @@ public class CompanyController : ControllerBase
     /// </remarks>
     /// <param name="name">company name</param>
     /// <param name="viewModel">company UpdateViewModel</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>company and its updated data</returns>
     /// <response code="200">Success</response>
     /// <response code="400">Bad Request</response>
@@ -179,6 +180,7 @@ public class CompanyController : ControllerBase
     /// delete a company
     /// </summary>
     /// <param name="name">company name</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>deleted company</returns>
     /// <response code="200">Success</response>
     /// <response code="401">Unauthorized</response>
