@@ -10,7 +10,15 @@ namespace ParkingLotManager.WebApi.Controllers;
 [ApiController]
 public class HomeController : ControllerBase
 {
+    /// <summary>
+    /// check API status
+    /// </summary>
+    /// <returns>API status</returns>
+    /// <response code="200">Ok</response>
+    /// <response code="500">API Offline</response>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Route("home/status-check")]
     public IActionResult CheckStatus()
     {
@@ -20,10 +28,14 @@ public class HomeController : ControllerBase
         }
         catch (Exception)
         {
-            return StatusCode(500, new { message = "00EX0000 - Internal server error" });
+            return StatusCode(500, new { message = "00EX0000 - API offline" });
         }        
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("home/validate-api-key")]
     [ApiKey]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
