@@ -23,7 +23,7 @@ public class CompanyController : ControllerBase
         => _ctx = ctx;
 
     /// <summary>
-    /// get collection of registered companies
+    /// gets collection of registered companies
     /// </summary>
     /// <returns>registered companies data</returns>
     /// <response code="200">Success</response>
@@ -85,7 +85,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// register a new company
+    /// registers a new company
     /// </summary>
     /// <remarks>
     /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -129,7 +129,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// update a company
+    /// updates a company
     /// </summary>
     /// <remarks>
     /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -160,6 +160,7 @@ public class CompanyController : ControllerBase
             var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == name);
             if (company == null)
                 return NotFound(new ResultViewModel<UpdateCompanyViewModel>("05EX5007 - Company not found"));
+            
             company.Update(viewModel, viewModel.Address);
             _ctx.Update(company);
             await _ctx.SaveChangesAsync();
@@ -177,7 +178,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// delete a company
+    /// deletes a company
     /// </summary>
     /// <param name="name">company name</param>
     /// <param name="apiKeyName">API key</param>
