@@ -19,11 +19,15 @@ public class VehicleController : ControllerBase
     private readonly AppDataContext _ctx;
     private const string apiKeyName = Configuration.ApiKeyName;
 
+    private VehicleController()
+    {        
+    }
+
     public VehicleController(AppDataContext ctx)
         => _ctx = ctx;
 
     /// <summary>
-    /// get collection of vehicles
+    /// gets collection of vehicles
     /// </summary>
     /// <returns>collection of vehicles</returns>
     /// <response code="200">Success</response>
@@ -36,7 +40,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
+    public virtual async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
@@ -53,7 +57,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// get vehicle by licensePlate
+    /// gets vehicle by licensePlate
     /// </summary>
     /// <returns>vehicle data by licensePlate</returns>
     /// <response code="200">Success</response>
@@ -66,7 +70,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetByLicensePlateAsync(
+    public virtual async Task<IActionResult> GetByLicensePlateAsync(
         [FromRoute] string licensePlate,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
@@ -85,7 +89,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// get collection of Ford vehicles
+    /// gets collection of Ford vehicles
     /// </summary>
     /// <returns>collection of Ford vehicles</returns>
     /// <response code="200">Success</response>
@@ -115,7 +119,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// register a new vehicle
+    /// registers a new vehicle
     /// </summary>
     /// <remarks>
     /// {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
@@ -139,12 +143,12 @@ public class VehicleController : ControllerBase
             return BadRequest(new ResultViewModel<RegisterVehicleViewModel>(ModelState.GetErrors()));
         try
         {
-            var newVehicle = new Vehicle();
-            newVehicle.Create(viewModel);
-            await _ctx.Vehicles.AddAsync(newVehicle);
+            var vehicle = new Vehicle();
+            var createdVehicle = vehicle.Create(viewModel);
+            await _ctx.Vehicles.AddAsync(createdVehicle);
             await _ctx.SaveChangesAsync();
 
-            return Created($"vehicles/v1/{newVehicle.LicensePlate}", new ResultViewModel<Vehicle>(newVehicle));
+            return Created($"vehicles/v1/{createdVehicle.LicensePlate}", new ResultViewModel<Vehicle>(createdVehicle));
         }
         catch (DbUpdateException)
         {
@@ -158,7 +162,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// update data of a registered vehicle
+    /// updates data of a registered vehicle
     /// </summary>
     /// <returns>updated data of vehicle</returns>
     /// <remarks>
@@ -203,7 +207,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// delete vehicle by licensePlate
+    /// deletes vehicle by licensePlate
     /// </summary>
     /// <returns>data of deleted vehicle</returns>
     /// <response code="200">Success</response>
