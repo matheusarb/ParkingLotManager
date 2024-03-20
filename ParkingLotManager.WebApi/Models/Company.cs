@@ -17,7 +17,7 @@ public class Company : ICompany
     public IList<Vehicle>? Vehicles { get; private set; }
     public IList<User>? Users { get; private set; }
 
-    public void Create(RegisterCompanyViewModel viewModel)
+    public virtual Company Create(RegisterCompanyViewModel viewModel)
     {
         Name = viewModel.Name;
         Cnpj = viewModel.Cnpj;
@@ -25,15 +25,25 @@ public class Company : ICompany
         Telephone = viewModel.Telephone;
         CarSlots = viewModel.CarSlots;
         MotorcycleSlots = viewModel.MotorcycleSlots;
+
+        return this;
     }
 
-    public void Update(UpdateCompanyViewModel viewModel, Address address)
+    public virtual Company Update(UpdateCompanyViewModel viewModel, Address address)
     {
         Name = viewModel.Name.IsNullOrEmpty() ? this.Name : viewModel.Name;
         Cnpj = !viewModel.Cnpj.IsValid ? this.Cnpj : viewModel.Cnpj;
-        Address = Address.Update(viewModel.Address);
+
+        if(this.Address == null )
+        {
+            this.Address = new Address(address.Street, address.City, address.ZipCode);
+        }
+        Address = viewModel.Address == null ? Address : this.Address.Update(viewModel.Address);
+                
         Telephone = viewModel.Telephone.IsNullOrEmpty() ? this.Telephone : viewModel.Telephone;
         CarSlots = viewModel.CarSlots == 0 || viewModel.CarSlots == null ? this.CarSlots : viewModel.CarSlots;
         MotorcycleSlots = viewModel.MotorcycleSlots == 0 || viewModel.MotorcycleSlots == null ? this.MotorcycleSlots : viewModel.MotorcycleSlots;
+        
+        return this;
     }
 }
