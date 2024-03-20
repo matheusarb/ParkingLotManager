@@ -7,18 +7,18 @@ namespace ParkingLotManager.WebApi.Models;
 
 public class Vehicle : IVehicle
 {
-    public string LicensePlate { get; private set; }
-    public string Brand { get; private set; }
-    public string Model { get; private set; }
-    public string Color { get; private set; }
-    public EVehicleType Type { get; private set; }
-    public DateTime CreatedAt { get; private set; }
-    public DateTime LastUpdateDate { get; private set; }
+    public string LicensePlate { get; set; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public string Color { get; set; }
+    public EVehicleType Type { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime LastUpdateDate { get; set; }
 
-    public Company? Company { get; private set; }
-    public string CompanyName { get; private set; }
+    public Company? Company { get; set; }
+    public string CompanyName { get; set; }
 
-    public void Create(RegisterVehicleViewModel viewModel)
+    public virtual Vehicle Create(RegisterVehicleViewModel viewModel)
     {
         LicensePlate = viewModel.LicensePlate;
         Model = viewModel.Model;
@@ -26,9 +26,11 @@ public class Vehicle : IVehicle
         Color = viewModel.Color;
         Type = viewModel.Type;
         CompanyName = viewModel.CompanyName;
+        
+        return this;
     }
     
-    public void Update(UpdateVehicleViewModel viewModel)
+    public virtual Vehicle Update(UpdateVehicleViewModel viewModel)
     {
         LicensePlate = viewModel.LicensePlate.IsNullOrEmpty() ? LicensePlate : viewModel.LicensePlate;
         Brand = viewModel.Brand.IsNullOrEmpty() ? Brand : viewModel.Brand;
@@ -36,6 +38,8 @@ public class Vehicle : IVehicle
         Color = viewModel.Color.IsNullOrEmpty() ? Color : viewModel.Color;
         Type = viewModel.Type != Type ? viewModel.Type : Type;
         CompanyName = viewModel.CompanyName.IsNullOrEmpty() ? CompanyName : viewModel.CompanyName;
+
+        return this;
     }
 
     static void ChangeLicensePlate(string licensePlate, Vehicle vehicle)
