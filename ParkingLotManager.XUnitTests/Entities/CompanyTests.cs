@@ -11,6 +11,7 @@ using Xunit;
 
 namespace ParkingLotManager.XUnitTests.Entities;
 
+[Trait("CompanyEntity", "Unit")]
 public class CompanyTests
 {
     private Company _company = new();

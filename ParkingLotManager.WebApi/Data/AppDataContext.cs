@@ -7,7 +7,7 @@ namespace ParkingLotManager.WebApi.Data;
 
 public class AppDataContext : DbContext
 {
-    public AppDataContext()
+    protected AppDataContext()
     {        
     }
 

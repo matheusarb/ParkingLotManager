@@ -19,6 +19,10 @@ public class CompanyController : ControllerBase
     private readonly AppDataContext _ctx;
     private const string apiKeyName = Configuration.ApiKeyName;
 
+    public CompanyController()
+    {        
+    }
+
     public CompanyController(AppDataContext ctx)
         => _ctx = ctx;
 
@@ -35,7 +39,7 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
+    public virtual async Task<IActionResult> GetAsync([FromQuery(Name = apiKeyName)] string apiKeyName)
     {
         try
         {
@@ -66,7 +70,7 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsyncByName(
+    public virtual async Task<IActionResult> GetAsyncByName(
         [FromRoute] string name,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
@@ -102,7 +106,7 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterAsync(
+    public virtual async Task<IActionResult> RegisterAsync(
         [FromBody] RegisterCompanyViewModel viewModel,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
@@ -147,7 +151,7 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update(
+    public virtual async Task<IActionResult> Update(
         [FromRoute] string name,
         [FromBody] UpdateCompanyViewModel viewModel,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
@@ -192,7 +196,7 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete(
+    public virtual async Task<IActionResult> Delete(
         [FromRoute] string name,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {

@@ -19,7 +19,7 @@ public class VehicleController : ControllerBase
     private readonly AppDataContext _ctx;
     private const string apiKeyName = Configuration.ApiKeyName;
 
-    private VehicleController()
+    protected VehicleController()
     {        
     }
 
@@ -102,7 +102,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetIfBrandIsFordAsync()
+    public virtual async Task<IActionResult> GetIfBrandIsFordAsync()
     {
         try
         {
@@ -135,7 +135,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterAsync(
+    public virtual async Task<IActionResult> RegisterAsync(
         [FromBody] RegisterVehicleViewModel viewModel,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {
@@ -178,7 +178,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update(
+    public virtual async Task<IActionResult> Update(
         [FromRoute] string licensePlate,
         [FromBody] UpdateVehicleViewModel viewModel,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
@@ -220,7 +220,7 @@ public class VehicleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete(
+    public virtual async Task<IActionResult> Delete(
         [FromRoute] string licensePlate,
         [FromQuery(Name = apiKeyName)] string apiKeyName)
     {

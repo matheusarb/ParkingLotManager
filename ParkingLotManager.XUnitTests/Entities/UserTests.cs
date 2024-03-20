@@ -11,7 +11,8 @@ using Xunit;
 
 namespace ParkingLotManager.XUnitTests.Entities;
 
-public sealed class UserTests
+[Trait("Entities", "Unit")]
+public class UserTests
 {
     private User _user = new();
     private Mock<User> _mockedUser = new();

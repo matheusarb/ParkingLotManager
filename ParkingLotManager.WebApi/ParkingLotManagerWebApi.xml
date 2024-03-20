@@ -40,7 +40,7 @@
             <param name="id">user id</param>
             <returns>updated user</returns>
         </member>
-        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Delete(System.Int32)">
+        <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Delete(System.Int32,System.String)">
             <summary>
             deletes a user by its id
             </summary>
