@@ -5,6 +5,17 @@ namespace ParkingLotManager.WebApi.ViewModels.UserViewModels;
 
 public class UpdateUserViewModel
 {
+    public UpdateUserViewModel()
+    {        
+    }
+
+    public UpdateUserViewModel(string? email, string? name, string? passwordHash)
+    {
+        Email = email;
+        Name = name;
+        PasswordHash = passwordHash;
+    }
+
     [JsonPropertyName("Email")]
     [EmailAddress]
     public string? Email { get; set; }
