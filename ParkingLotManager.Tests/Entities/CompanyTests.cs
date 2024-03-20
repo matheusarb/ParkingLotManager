@@ -8,7 +8,7 @@ using ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
 namespace ParkingLotManager.Tests.Entities;
 
 [TestClass]
-[TestCategory("Company")]
+//[TestCategory("Company")]
 public class CompanyTests
 {
     private readonly Company _company = new();

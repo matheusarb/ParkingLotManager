@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ParkingLotManager.Tests.Entities;
 
 [TestClass]
-[TestCategory("Vehicle")]
+//[TestCategory("Vehicle")]
 public class VehicleTests
 {
     private Vehicle _vehicle = new();
