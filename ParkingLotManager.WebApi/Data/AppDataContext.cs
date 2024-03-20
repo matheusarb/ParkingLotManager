@@ -7,6 +7,10 @@ namespace ParkingLotManager.WebApi.Data;
 
 public class AppDataContext : DbContext
 {
+    public AppDataContext()
+    {        
+    }
+
     public AppDataContext(DbContextOptions options)
         : base(options)
     {        
