@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.Extensions;
 
 namespace ParkingLotManager.WebApi.ValueObjects;
 
@@ -18,13 +19,12 @@ public class Address : ValueObject
     public string City { get; private set; }
     public string ZipCode { get; private set; }
 
-    public Address Update(Address newAddress)
+    public virtual Address Update(Address newAddress)
     {
-        var address = new Address();
-        address.Street = newAddress.Street.IsNullOrEmpty() ? Street : newAddress.Street;
-        address.City = newAddress.City.IsNullOrEmpty() ? City : newAddress.City;
-        address.ZipCode = newAddress.City.IsNullOrEmpty() ? ZipCode : newAddress.ZipCode;
+        Street = newAddress.Street.IsNullOrEmptyOrWhiteSpace() ? Street : newAddress.Street;
+        City = newAddress.City.IsNullOrEmptyOrWhiteSpace() ? City : newAddress.City;
+        ZipCode = newAddress.City.IsNullOrEmptyOrWhiteSpace() ? ZipCode : newAddress.ZipCode;
 
-        return address;
+        return this;
     }
 }
