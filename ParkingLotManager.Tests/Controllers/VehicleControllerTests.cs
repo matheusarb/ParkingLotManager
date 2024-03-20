@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace ParkingLotManager.Tests.Controllers;
 
 [TestClass]
-[TestCategory("VehicleController")]
+[TestCategory("ControllersMSTest")]
 public class VehicleControllerTests
 {
     private Vehicle _vehicle = new Vehicle();

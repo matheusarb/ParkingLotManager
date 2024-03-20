@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ParkingLotManager.Tests.Controllers;
 
 [TestClass]
-[TestCategory("CompanyController")]
+[TestCategory("ControllersMSTest")]
 public class CompanyControllerTests
 {
     private readonly Company _company = new();
