@@ -4,7 +4,9 @@ namespace ParkingLotManager.WebApi.Models.Contracts;
 
 public interface IUser
 {
-    public void Create(CreateUserViewModel viewModel, string password);
+    public User Create(CreateUserViewModel viewModel, string password);
 
-    public void Update(UpdateUserViewModel viewModel);
+    public User Update(UpdateUserViewModel viewModel);
+
+    public User CreateAdmin(CreateUserViewModel viewModel, string password);
 }
