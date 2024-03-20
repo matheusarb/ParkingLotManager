@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.IdentityModel.Tokens;
 using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ViewModels.UserViewModels;
 using SecureIdentity.Password;
@@ -19,24 +20,27 @@ public class User : IUser
 
     public IList<Role>? Roles { get; set; }
 
-    public void Create(CreateUserViewModel viewModel, string password)
+    public virtual User Create(CreateUserViewModel viewModel, string password)
     {
         Name = viewModel.Name;
         Email = viewModel.Email;
         PasswordHash = PasswordHasher.Hash(password);
-
         Slug = viewModel.Email.Replace("@", "-").Replace(".", "-");
         CompanyName = viewModel.CompanyName;
+
+        return this;
     }
 
-    public void Update(UpdateUserViewModel viewModel)
+    public virtual User Update(UpdateUserViewModel viewModel)
     {
         Name = viewModel.Name.IsNullOrEmpty() ? Name : viewModel.Name;
         Email = viewModel.Email.IsNullOrEmpty() ? Email : viewModel.Email;
         PasswordHash = viewModel.PasswordHash.IsNullOrEmpty() ? PasswordHash : viewModel.PasswordHash;
+
+        return this;
     }
 
-    public void CreateAdmin(CreateUserViewModel viewModel, string password)
+    public virtual User CreateAdmin(CreateUserViewModel viewModel, string password)
     {
         Name = viewModel.Name;
         Email = viewModel.Email;
@@ -44,5 +48,7 @@ public class User : IUser
         Roles = new List<Role> { new Role() { Name = "admin", Slug = "admin" } };
         Slug = viewModel.Email.Replace("@", "-").Replace(".", "-");
         CompanyName = viewModel.CompanyName;
+
+        return this;
     }
 }
