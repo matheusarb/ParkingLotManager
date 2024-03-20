@@ -5,7 +5,7 @@ namespace ParkingLotManager.WebApi.Models.Contracts;
 
 public interface ICompany
 {
-    public void Create(RegisterCompanyViewModel viewModel);
+    public Company Create(RegisterCompanyViewModel viewModel);
 
-    public void Update(UpdateCompanyViewModel viewModel, Address address);
+    public Company Update(UpdateCompanyViewModel viewModel, Address address);
 }
