@@ -26,7 +26,7 @@ public class AccountController : ControllerBase
         => _ctx = ctx;
 
     /// <summary>
-    /// login into system and generate Bearer Token
+    /// logs into the system and generates Bearer Token
     /// </summary>
     /// <param name="viewModel">email and password</param>
     /// <param name="tokenService">Bearer Token generator</param>
@@ -70,7 +70,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// get collection of users
+    /// gets collection of users
     /// </summary>
     /// <returns>collection of users</returns>
     [HttpGet("v1/accounts")]
@@ -137,13 +137,13 @@ public class AccountController : ControllerBase
         {
             var user = new User();
             var password = PasswordGenerator.Generate(25);
-            user.Create(viewModel, password);
-            await _ctx.Users.AddAsync(user);
+            var createdUser = user.Create(viewModel, password);
+            await _ctx.Users.AddAsync(createdUser);
             await _ctx.SaveChangesAsync();
 
             return Created($"v1/users/{user.Id}", new ResultViewModel<dynamic>(new
             {
-                user.Email,
+                createdUser.Email,
                 password
             }));
         }
