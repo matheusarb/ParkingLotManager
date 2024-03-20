@@ -12,9 +12,9 @@ public class AppDataContext : DbContext
     {        
     }
 
-    public DbSet<Company> Companies { get; set; }
-    public DbSet<Vehicle> Vehicles { get; set; }
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<Company> Companies { get; set; }
+    public virtual DbSet<Vehicle> Vehicles { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
