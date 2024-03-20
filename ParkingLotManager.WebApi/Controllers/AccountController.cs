@@ -22,6 +22,10 @@ public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
 
+    protected AccountController()
+    {        
+    }
+
     public AccountController(AppDataContext ctx)
         => _ctx = ctx;
 
@@ -35,7 +39,9 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, [FromServices] TokenService tokenService)
+    public virtual async Task<IActionResult> Login(
+        [FromBody] LoginViewModel viewModel,
+        [FromServices] TokenService tokenService)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
@@ -78,7 +84,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAsync([FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
+    public virtual async Task<IActionResult> GetAsync([FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         try
         {
@@ -103,7 +109,9 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
+    public virtual async Task<IActionResult> GetByIdAsync(
+        [FromRoute] int id,
+        [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         try
         {
@@ -129,7 +137,9 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateUserViewModel viewModel, [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
+    public virtual async Task<IActionResult> CreateAsync(
+        [FromBody] CreateUserViewModel viewModel,
+        [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
@@ -169,7 +179,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update(
+    public virtual async Task<IActionResult> Update(
         [FromRoute] int id,
         [FromBody] UpdateUserViewModel viewModel,
         [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
@@ -209,7 +219,9 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+    public virtual async Task<IActionResult> Delete(
+        [FromRoute] int id,
+        [FromQuery(Name = Configuration.ApiKeyName)] string apiKeyName)
     {
         try
         {
@@ -242,7 +254,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateAdminAsync([FromBody] CreateUserViewModel viewModel)
+    public virtual async Task<IActionResult> CreateAdminAsync([FromBody] CreateUserViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
