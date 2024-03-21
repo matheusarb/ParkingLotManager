@@ -27,7 +27,7 @@ public class VehicleController : ControllerBase
         => _ctx = ctx;
 
     /// <summary>
-    /// gets collection of vehicles
+    /// Get collection of vehicles
     /// </summary>
     /// <returns>collection of vehicles</returns>
     /// <response code="200">Success</response>
@@ -57,7 +57,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// gets vehicle by licensePlate
+    /// Get vehicle by licensePlate
     /// </summary>
     /// <returns>vehicle data by licensePlate</returns>
     /// <response code="200">Success</response>
@@ -89,7 +89,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// gets collection of Ford vehicles
+    /// Get collection of Ford vehicles. Only works with Admin privileges
     /// </summary>
     /// <returns>collection of Ford vehicles</returns>
     /// <response code="200">Success</response>
@@ -119,7 +119,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// registers a new vehicle
+    /// Register a new vehicle
     /// </summary>
     /// <remarks>
     /// {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
@@ -162,7 +162,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// updates data of a registered vehicle
+    /// Update data of a registered vehicle
     /// </summary>
     /// <returns>updated data of vehicle</returns>
     /// <remarks>
@@ -207,7 +207,7 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// deletes vehicle by licensePlate
+    /// Delete vehicle by licensePlate
     /// </summary>
     /// <returns>data of deleted vehicle</returns>
     /// <response code="200">Success</response>

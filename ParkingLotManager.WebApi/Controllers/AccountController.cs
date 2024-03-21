@@ -30,7 +30,7 @@ public class AccountController : ControllerBase
         => _ctx = ctx;
 
     /// <summary>
-    /// logs into the system and generates Bearer Token
+    /// Log into the system and generate Bearer Token
     /// </summary>
     /// <param name="viewModel">email and password</param>
     /// <param name="tokenService">Bearer Token generator</param>
@@ -76,7 +76,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// gets collection of users
+    /// Get collection of users
     /// </summary>
     /// <returns>collection of users</returns>
     [HttpGet("v1/accounts")]
@@ -100,7 +100,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// get user by id
+    /// Get user by id
     /// </summary>
     /// <param name="id">user id</param>
     /// <returns>user</returns>
@@ -128,7 +128,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// creates a user with no role
+    /// Create a user with no role
     /// </summary>
     /// <param name="viewModel">viewModel to create user</param>
     /// <returns>created user and its Uri</returns>
@@ -153,6 +153,7 @@ public class AccountController : ControllerBase
 
             return Created($"v1/users/{user.Id}", new ResultViewModel<dynamic>(new
             {
+                createdUser.Id,
                 createdUser.Email,
                 password
             }));
@@ -169,7 +170,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// updates a user by its id
+    /// Update a user by its id
     /// </summary>
     /// <param name="viewModel">viewModel to update user</param>
     /// <param name="id">user id</param>
@@ -210,7 +211,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// deletes a user by its id
+    /// Delete a user by its id
     /// </summary>
     /// <param name="id">user id</param>
     /// <returns>deleted user</returns>
@@ -245,7 +246,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// creates a user with admin role
+    /// Create a user with admin role
     /// </summary>
     /// <param name="viewModel">viewModel to create admin</param>
     /// <returns>user with admin role</returns>
@@ -269,6 +270,7 @@ public class AccountController : ControllerBase
 
             return Created($"v1/users/admin/{user.Id}", new ResultViewModel<dynamic>(new
             {
+                user.Id,
                 user.Email,
                 password,
                 userRole

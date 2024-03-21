@@ -11,7 +11,7 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class HomeController : ControllerBase
 {
     /// <summary>
-    /// check API status
+    /// Check API status
     /// </summary>
     /// <returns>API status</returns>
     /// <response code="200">Ok</response>
@@ -33,7 +33,7 @@ public class HomeController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// Validate API Key
     /// </summary>
     /// <returns></returns>
     [HttpGet("home/validate-api-key")]

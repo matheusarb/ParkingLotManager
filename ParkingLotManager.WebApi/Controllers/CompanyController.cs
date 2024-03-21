@@ -19,7 +19,7 @@ public class CompanyController : ControllerBase
     private readonly AppDataContext _ctx;
     private const string apiKeyName = Configuration.ApiKeyName;
 
-    public CompanyController()
+    protected CompanyController()
     {        
     }
 
@@ -27,7 +27,7 @@ public class CompanyController : ControllerBase
         => _ctx = ctx;
 
     /// <summary>
-    /// gets collection of registered companies
+    /// Get collection of registered companies
     /// </summary>
     /// <returns>registered companies data</returns>
     /// <response code="200">Success</response>
@@ -56,7 +56,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// get company by name
+    /// Get company by name
     /// </summary>
     /// <param name="name">company name</param>
     /// <param name="apiKeyName">API Key</param>
@@ -89,7 +89,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// registers a new company
+    /// Register a new company
     /// </summary>
     /// <remarks>
     /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -133,7 +133,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// updates a company
+    /// Update a company
     /// </summary>
     /// <remarks>
     /// {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -182,7 +182,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// deletes a company
+    /// Delete a company
     /// </summary>
     /// <param name="name">company name</param>
     /// <param name="apiKeyName">API key</param>

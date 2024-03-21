@@ -6,7 +6,7 @@
     <members>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Login(ParkingLotManager.WebApi.ViewModels.UserViewModels.LoginViewModel,ParkingLotManager.WebApi.Services.TokenService)">
             <summary>
-            logs into the system and generates Bearer Token
+            Log into the system and generate Bearer Token
             </summary>
             <param name="viewModel">email and password</param>
             <param name="tokenService">Bearer Token generator</param>
@@ -14,27 +14,27 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.GetAsync(System.String)">
             <summary>
-            gets collection of users
+            Get collection of users
             </summary>
             <returns>collection of users</returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.GetByIdAsync(System.Int32,System.String)">
             <summary>
-            get user by id
+            Get user by id
             </summary>
             <param name="id">user id</param>
             <returns>user</returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.CreateAsync(ParkingLotManager.WebApi.ViewModels.UserViewModels.CreateUserViewModel,System.String)">
             <summary>
-            creates a user with no role
+            Create a user with no role
             </summary>
             <param name="viewModel">viewModel to create user</param>
             <returns>created user and its Uri</returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Update(System.Int32,ParkingLotManager.WebApi.ViewModels.UserViewModels.UpdateUserViewModel,System.String)">
             <summary>
-            updates a user by its id
+            Update a user by its id
             </summary>
             <param name="viewModel">viewModel to update user</param>
             <param name="id">user id</param>
@@ -42,21 +42,21 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.Delete(System.Int32,System.String)">
             <summary>
-            deletes a user by its id
+            Delete a user by its id
             </summary>
             <param name="id">user id</param>
             <returns>deleted user</returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.AccountController.CreateAdminAsync(ParkingLotManager.WebApi.ViewModels.UserViewModels.CreateUserViewModel)">
             <summary>
-            creates a user with admin role
+            Create a user with admin role
             </summary>
             <param name="viewModel">viewModel to create admin</param>
             <returns>user with admin role</returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.GetAsync(System.String)">
             <summary>
-            gets collection of registered companies
+            Get collection of registered companies
             </summary>
             <returns>registered companies data</returns>
             <response code="200">Success</response>
@@ -66,7 +66,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.GetAsyncByName(System.String,System.String)">
             <summary>
-            get company by name
+            Get company by name
             </summary>
             <param name="name">company name</param>
             <param name="apiKeyName">API Key</param>
@@ -78,7 +78,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.RegisterAsync(ParkingLotManager.WebApi.ViewModels.CompanyViewModels.RegisterCompanyViewModel,System.String)">
             <summary>
-            registers a new company
+            Register a new company
             </summary>
             <remarks>
             {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -93,7 +93,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.Update(System.String,ParkingLotManager.WebApi.ViewModels.CompanyViewModels.UpdateCompanyViewModel,System.String)">
             <summary>
-            updates a company
+            Update a company
             </summary>
             <remarks>
             {"name":"string","cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"},"telephone":"string","carSlots":0,"motorcycleSlots":0}
@@ -109,7 +109,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.CompanyController.Delete(System.String,System.String)">
             <summary>
-            deletes a company
+            Delete a company
             </summary>
             <param name="name">company name</param>
             <param name="apiKeyName">API key</param>
@@ -121,7 +121,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.HomeController.CheckStatus">
             <summary>
-            check API status
+            Check API status
             </summary>
             <returns>API status</returns>
             <response code="200">Ok</response>
@@ -129,13 +129,13 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.HomeController.ValidateApiKey">
             <summary>
-            
+            Validate API Key
             </summary>
             <returns></returns>
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetAsync(System.String)">
             <summary>
-            gets collection of vehicles
+            Get collection of vehicles
             </summary>
             <returns>collection of vehicles</returns>
             <response code="200">Success</response>
@@ -145,7 +145,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetByLicensePlateAsync(System.String,System.String)">
             <summary>
-            gets vehicle by licensePlate
+            Get vehicle by licensePlate
             </summary>
             <returns>vehicle data by licensePlate</returns>
             <response code="200">Success</response>
@@ -155,7 +155,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.GetIfBrandIsFordAsync">
             <summary>
-            gets collection of Ford vehicles
+            Get collection of Ford vehicles. Only works with Admin privileges
             </summary>
             <returns>collection of Ford vehicles</returns>
             <response code="200">Success</response>
@@ -165,7 +165,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.RegisterAsync(ParkingLotManager.WebApi.ViewModels.VehicleViewModels.RegisterVehicleViewModel,System.String)">
             <summary>
-            registers a new vehicle
+            Register a new vehicle
             </summary>
             <remarks>
             {"company":{"cnpj":{"cnpjNumber":"string"},"address":{"street":"string","city":"string","zipCode":"string"}},"licensePlate":"strings","brand":"string","model":"string","color":"string","type":1,"companyName":"string"}
@@ -178,7 +178,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.Update(System.String,ParkingLotManager.WebApi.ViewModels.VehicleViewModels.UpdateVehicleViewModel,System.String)">
             <summary>
-            updates data of a registered vehicle
+            Update data of a registered vehicle
             </summary>
             <returns>updated data of vehicle</returns>
             <remarks>
@@ -191,7 +191,7 @@
         </member>
         <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.Delete(System.String,System.String)">
             <summary>
-            deletes vehicle by licensePlate
+            Delete vehicle by licensePlate
             </summary>
             <returns>data of deleted vehicle</returns>
             <response code="200">Success</response>
