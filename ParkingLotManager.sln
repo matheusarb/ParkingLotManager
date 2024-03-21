@@ -5,9 +5,7 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotManager.WebApi", "ParkingLotManager.WebApi\ParkingLotManager.WebApi.csproj", "{C2F11869-4381-4AF8-8710-619718851333}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotManager.Tests", "ParkingLotManager.Tests\ParkingLotManager.Tests.csproj", "{677595EA-4834-4A9D-B151-DF8E9745B53D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotManager.XUnitTests", "ParkingLotManager.XUnitTests\ParkingLotManager.XUnitTests.csproj", "{30E87464-7330-466D-90F9-9340F409495E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotManager.XUnitTests", "ParkingLotManager.XUnitTests\ParkingLotManager.XUnitTests.csproj", "{30E87464-7330-466D-90F9-9340F409495E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{C2F11869-4381-4AF8-8710-619718851333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2F11869-4381-4AF8-8710-619718851333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2F11869-4381-4AF8-8710-619718851333}.Release|Any CPU.Build.0 = Release|Any CPU
-		{677595EA-4834-4A9D-B151-DF8E9745B53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{677595EA-4834-4A9D-B151-DF8E9745B53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{677595EA-4834-4A9D-B151-DF8E9745B53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{677595EA-4834-4A9D-B151-DF8E9745B53D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30E87464-7330-466D-90F9-9340F409495E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{30E87464-7330-466D-90F9-9340F409495E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30E87464-7330-466D-90F9-9340F409495E}.Release|Any CPU.ActiveCfg = Release|Any CPU
