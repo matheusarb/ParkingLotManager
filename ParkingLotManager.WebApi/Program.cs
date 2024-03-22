@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using ParkingLotManager.WebApi;
 using ParkingLotManager.WebApi.Data;
+using ParkingLotManager.WebApi.DTOs.Mappings;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.Services;
 using System.Text;
@@ -17,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigureAuthentication(builder);
 ConfigureServices(builder);
 ConfigureSwaggerApi(builder);
+ConfigureDTOs(builder);
 ConfigureMvc(builder);
 
 var app = builder.Build();
@@ -100,6 +102,11 @@ static void ConfigureMvc(WebApplicationBuilder builder)
     {
         options.SuppressModelStateInvalidFilter = true;
     });
+}
+
+static void ConfigureDTOs(WebApplicationBuilder builder)
+{
+    builder.Services.AddAutoMapper(typeof(MappingDTOs));
 }
 
 static void LoadConfiguration(WebApplication app)
