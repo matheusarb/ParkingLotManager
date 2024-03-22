@@ -25,7 +25,7 @@ public class AccountControllerTests
     private UpdateUserViewModel _updateUserViewModel = new(
         "test", "test", "pass12345");
 
-    [Fact]
+    [Fact(DisplayName ="Return User by Id")]
     public async Task Get_ShouldReturnOkWhenGettingUserById()
     {
         var mockedController = new Mock<AccountController>();
