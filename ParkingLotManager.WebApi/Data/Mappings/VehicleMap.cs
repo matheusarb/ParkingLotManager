@@ -56,6 +56,11 @@ public class VehicleMap : IEntityTypeConfiguration<Vehicle>
             .HasMaxLength(60)
             .HasDefaultValueSql("GETUTCDATE()");
 
+        builder.Property(x => x.IsActive)
+            .IsRequired()
+            .HasColumnName("IsActive")
+            .HasColumnType("BIT");
+
         // Relationships
         builder.HasOne(x => x.Company)
             .WithMany(x => x.Vehicles)
