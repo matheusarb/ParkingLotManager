@@ -199,6 +199,30 @@
             <response code="404">Not Found</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.DepartureAsync(System.String,System.String)">
+            <summary>
+            Registers a vehicle departure
+            </summary>
+            <param name="licensePlate">vehicle license plate</param>
+            <param name="apiKeyName">API key</param>
+            <returns>vehicle data</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Controllers.VehicleController.ReenteredAsync(System.String,System.String)">
+            <summary>
+            Reactivate a vehicle which already has been in the parking lot
+            </summary>
+            <param name="licensePlate">vehicle license plate</param>
+            <param name="apiKeyName">API key</param>
+            <returns>reactivation confirmation</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not Found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
         <member name="T:ParkingLotManager.WebApi.Migrations.DatabaseCreation">
             <inheritdoc />
         </member>
@@ -269,6 +293,30 @@
             <inheritdoc />
         </member>
         <member name="M:ParkingLotManager.WebApi.Migrations.AddUserRoleRelationship.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.CreateColumnIsActiveOnVehicleTable">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateColumnIsActiveOnVehicleTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateColumnIsActiveOnVehicleTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.CreateColumnIsActiveOnVehicleTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.RefactorIsActiveOnVehicleTable">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.RefactorIsActiveOnVehicleTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.RefactorIsActiveOnVehicleTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.RefactorIsActiveOnVehicleTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>
