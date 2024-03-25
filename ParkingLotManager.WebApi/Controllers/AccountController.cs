@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
+using ParkingLotManager.WebApi.DTOs;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.Services;
@@ -21,13 +23,17 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly AppDataContext _ctx;
+    private readonly IMapper _mapper;
 
     protected AccountController()
     {        
     }
 
-    public AccountController(AppDataContext ctx)
-        => _ctx = ctx;
+    public AccountController(AppDataContext ctx, IMapper mapper)
+    {
+        _ctx = ctx;
+        _mapper = mapper;
+    }
 
     /// <summary>
     /// Log into the system and generate Bearer Token
@@ -91,7 +97,11 @@ public class AccountController : ControllerBase
             var users = await _ctx.Users.AsNoTracking().ToListAsync();
             if (users == null)
                 return BadRequest(new ResultViewModel<List<User>>("06EX6002 - Request could not be processed. Please try another time"));
-            return Ok(new ResultViewModel<List<User>>(users));
+
+            var userDto = _mapper.Map<List<UserDTO>>(users);
+            
+
+            return new JsonResult (userDto);
         }
         catch (Exception)
         {
@@ -118,8 +128,10 @@ public class AccountController : ControllerBase
             var user = await _ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
                 return BadRequest(new ResultViewModel<User>("06EX6004 - User not found"));
-            return Ok(new ResultViewModel<User>(user));
 
+            var userDto = _mapper.Map<UserDTO>(user).Display();
+
+            return new JsonResult(userDto);
         }
         catch (Exception)
         {
@@ -148,13 +160,15 @@ public class AccountController : ControllerBase
             var user = new User();
             var password = PasswordGenerator.Generate(25);
             var createdUser = user.Create(viewModel, password);
+            var createdUserDto = _mapper.Map<UserDTO>(createdUser);
+
             await _ctx.Users.AddAsync(createdUser);
             await _ctx.SaveChangesAsync();
 
             return Created($"v1/users/{user.Id}", new ResultViewModel<dynamic>(new
             {
-                createdUser.Id,
-                createdUser.Email,
+                createdUserDto.Id,
+                createdUserDto.Email,
                 password
             }));
         }
@@ -195,10 +209,12 @@ public class AccountController : ControllerBase
                 return BadRequest(new ResultViewModel<string>("06EX6004 - Request could not be processed. Please try another time"));
 
             user.Update(viewModel);
+            var userDto = _mapper.Map<UserDTO>(user).Display();
+
             _ctx.Update(user);
             await _ctx.SaveChangesAsync();
 
-            return Ok(new ResultViewModel<User>(user));
+            return Ok(new JsonResult(userDto));
         }
         catch (DbException)
         {
@@ -230,10 +246,12 @@ public class AccountController : ControllerBase
             if (user == null)
                 return BadRequest(new ResultViewModel<string>("06EX6008 - Request could not be processed. Please try another time"));
 
+            var userDto = _mapper.Map<UserDTO>(user).Display();
+
             _ctx.Remove(user);
             await _ctx.SaveChangesAsync();
 
-            return Ok(new ResultViewModel<User>(user));
+            return Ok(new JsonResult(userDto));
         }
         catch (DbException)
         {
@@ -265,13 +283,15 @@ public class AccountController : ControllerBase
             var password = PasswordGenerator.Generate(25);
             user.CreateAdmin(viewModel, password);
             var userRole = user.Roles?.Select(x => x.Name);
+            var createdAdminDto = _mapper.Map<UserDTO>(user);
+
             await _ctx.Users.AddAsync(user);
             await _ctx.SaveChangesAsync();
 
-            return Created($"v1/users/admin/{user.Id}", new ResultViewModel<dynamic>(new
+            return Created($"v1/users/admin/{createdAdminDto.Id}", new ResultViewModel<dynamic>(new
             {
-                user.Id,
-                user.Email,
+                createdAdminDto.Id,
+                createdAdminDto.Email,
                 password,
                 userRole
             }));
