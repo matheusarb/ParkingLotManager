@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ValueObjects;
 using ParkingLotManager.WebApi.ViewModels.CompanyViewModels;
@@ -23,15 +24,15 @@ public class Company : ICompany
         Cnpj = viewModel.Cnpj;
         Address = viewModel.Address;
         Telephone = viewModel.Telephone;
-        CarSlots = viewModel.CarSlots;
-        MotorcycleSlots = viewModel.MotorcycleSlots;
+        CarSlots = viewModel.CarSlots == 0 ? 1 : viewModel.CarSlots;
+        MotorcycleSlots = viewModel.MotorcycleSlots == 0 ? 1 : viewModel.MotorcycleSlots;
 
         return this;
     }
 
     public virtual Company Update(UpdateCompanyViewModel viewModel, Address address)
     {
-        Name = viewModel.Name.IsNullOrEmpty() ? this.Name : viewModel.Name;
+        Name = viewModel.Name.IsNullOrEmptyOrWhiteSpace() ? this.Name : viewModel.Name;
         Cnpj = !viewModel.Cnpj.IsValid ? this.Cnpj : viewModel.Cnpj;
 
         if(this.Address == null )
@@ -40,7 +41,7 @@ public class Company : ICompany
         }
         Address = viewModel.Address == null ? Address : this.Address.Update(viewModel.Address);
                 
-        Telephone = viewModel.Telephone.IsNullOrEmpty() ? this.Telephone : viewModel.Telephone;
+        Telephone = viewModel.Telephone.IsNullOrEmptyOrWhiteSpace() ? this.Telephone : viewModel.Telephone;
         CarSlots = viewModel.CarSlots == 0 || viewModel.CarSlots == null ? this.CarSlots : viewModel.CarSlots;
         MotorcycleSlots = viewModel.MotorcycleSlots == 0 || viewModel.MotorcycleSlots == null ? this.MotorcycleSlots : viewModel.MotorcycleSlots;
         
