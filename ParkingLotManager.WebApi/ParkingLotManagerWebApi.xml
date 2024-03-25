@@ -319,5 +319,17 @@
         <member name="M:ParkingLotManager.WebApi.Migrations.RefactorIsActiveOnVehicleTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:ParkingLotManager.WebApi.Migrations.ChangeSlotPropertiesOnCompanyTableWhenVehicleIsCreated">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.ChangeSlotPropertiesOnCompanyTableWhenVehicleIsCreated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.ChangeSlotPropertiesOnCompanyTableWhenVehicleIsCreated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingLotManager.WebApi.Migrations.ChangeSlotPropertiesOnCompanyTableWhenVehicleIsCreated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
