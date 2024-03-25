@@ -9,7 +9,7 @@ namespace ParkingLotManager.WebApi.Models;
 
 public class User : IUser
 {
-    public int Id { get; }
+    public int Id { get; set; }
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }    
