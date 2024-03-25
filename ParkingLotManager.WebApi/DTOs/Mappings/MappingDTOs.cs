@@ -9,5 +9,6 @@ public class MappingDTOs : Profile
     {
         CreateMap<Vehicle, VehicleDTO>().ReverseMap();
         CreateMap<Company, CompanyDTO>().ReverseMap();
+        CreateMap<User, UserDTO>().ReverseMap();
     }
 }
