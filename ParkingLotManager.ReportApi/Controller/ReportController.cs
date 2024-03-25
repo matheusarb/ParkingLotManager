@@ -9,7 +9,7 @@ public class ReportController : ControllerBase
 {
     private readonly FlowManagementService _flowManagementService;
 
-    public ReportController(ParkingLotManagerApiRest parkingApi, FlowManagementService flowManagementService)
+    public ReportController(FlowManagementService flowManagementService)
         => _flowManagementService = flowManagementService;
 
     [HttpGet("v1/report/entered-vehicles")]
