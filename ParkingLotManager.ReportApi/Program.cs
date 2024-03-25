@@ -12,7 +12,7 @@ ConfigureSwagger(builder);
 ConfigureMappings(builder);
 
 //builder.Services.AddSingleton<IVehicleQuery, ParkingLotManagerApiRest>();
-builder.Services.AddSingleton<ParkingLotManagerApiRest>();
+builder.Services.AddSingleton<ParkingLotManagerWebApiService>();
 builder.Services.AddSingleton<FlowManagementService>();
 
 var app = builder.Build();
