@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
 using ParkingLotManager.WebApi.DTOs;
+using ParkingLotManager.WebApi.Enums;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
@@ -156,6 +158,21 @@ public class VehicleController : ControllerBase
             return BadRequest(new ResultViewModel<RegisterVehicleViewModel>(ModelState.GetErrors()));
         try
         {
+            var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == viewModel.CompanyName);
+            if (company == null)
+                return new JsonResult(new { message = "Company does not exist" });
+
+            if (viewModel.Type == EVehicleType.Car)
+            {
+                if (company.CarSlots == 0)
+                    return new JsonResult(new { message = "Sorry, car slots are full" });
+            }
+            if (viewModel.Type == EVehicleType.Motorcycle)
+            {
+                if (company.MotorcycleSlots == 0)
+                    return new JsonResult(new { message = "Sorry, motorcycle slots are full" });
+            }
+
             var createdVehicle = new Vehicle().Create(viewModel);
             var vehicleDto = _mapper.Map<VehicleDTO>(createdVehicle).Display();
 
@@ -244,7 +261,7 @@ public class VehicleController : ControllerBase
                 return NotFound(new ResultViewModel<Vehicle>("01EX4000 - Vehicle not found."));
 
             var deletedDto = _mapper.Map<VehicleDTO>(vehicle).Display();
-            
+
             _ctx.Vehicles.Remove(vehicle);
             await _ctx.SaveChangesAsync();
 
