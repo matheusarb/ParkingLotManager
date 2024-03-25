@@ -11,8 +11,8 @@ public class Company : ICompany
     public Cnpj Cnpj { get; private set; }
     public Address Address { get; private set; }
     public string Telephone { get; private set; }
-    public int CarSlots { get; private set; }
-    public int MotorcycleSlots { get; private set; }
+    public int CarSlots { get; set; }
+    public int MotorcycleSlots { get; set; }
 
     public IList<Vehicle>? Vehicles { get; private set; }
     public IList<User>? Users { get; private set; }
