@@ -1,4 +1,5 @@
-﻿using ParkingLotManager.WebApi.Models;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 
@@ -36,9 +37,11 @@ public class RegisterCompanyViewModel : Company
     public string Telephone { get; set; }
 
     [Required(ErrorMessage = "Company car slots is required")]
+    [Range(minimum:1, maximum:int.MaxValue)]
     public int CarSlots { get; set; }
 
     [Required(ErrorMessage = "Company motorcycle slots is required")]
+    [Range(minimum:1, maximum:int.MaxValue)]
     public int MotorcycleSlots { get; set; }
 }
 
