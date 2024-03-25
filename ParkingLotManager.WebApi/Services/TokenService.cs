@@ -10,7 +10,7 @@ namespace ParkingLotManager.WebApi.Services;
 
 public class TokenService : ITokenService
 {
-    public string GenerateToken(User user)
+    public virtual string GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
