@@ -21,7 +21,6 @@ public class ReportController : ControllerBase
     {
         var enteredVehicles = await _flowManagementService.CheckInFlowCalc();
 
-        //return Ok(new { message = $"There are {checkedInVehicles} vehicles in the parking lot" });
         return new JsonResult(new { message = $"There are {enteredVehicles} vehicles in the parking lot" });
     }
 
