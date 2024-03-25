@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
+using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models.Contracts;
 using ParkingLotManager.WebApi.ViewModels.UserViewModels;
 using SecureIdentity.Password;
@@ -33,9 +34,9 @@ public class User : IUser
 
     public virtual User Update(UpdateUserViewModel viewModel)
     {
-        Name = viewModel.Name.IsNullOrEmpty() ? Name : viewModel.Name;
-        Email = viewModel.Email.IsNullOrEmpty() ? Email : viewModel.Email;
-        PasswordHash = viewModel.PasswordHash.IsNullOrEmpty() ? PasswordHash : viewModel.PasswordHash;
+        Name = viewModel.Name.IsNullOrEmptyOrWhiteSpace() ? Name : viewModel.Name;
+        Email = viewModel.Email.IsNullOrEmptyOrWhiteSpace() ? Email : viewModel.Email;
+        PasswordHash = viewModel.PasswordHash.IsNullOrEmptyOrWhiteSpace() ? PasswordHash : viewModel.PasswordHash;
 
         return this;
     }
