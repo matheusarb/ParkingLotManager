@@ -27,10 +27,8 @@ public class ParkingLotManagerApiRest : IVehicleQuery
         var uri = new StringBuilder();
         uri.Append(Uri + $"/?{ApiKeyName}={ApiKey}");
 
-
         var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
         var response = new List<VehicleModel>();
-
         
         var responseParkingLotWebApi = await _httpClient.SendAsync(request);
         var contentResponse = await responseParkingLotWebApi.Content.ReadAsStringAsync();
