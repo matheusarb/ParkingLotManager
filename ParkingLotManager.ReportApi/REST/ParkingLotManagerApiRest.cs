@@ -41,31 +41,4 @@ public class ParkingLotManagerApiRest : IVehicleQuery
         
         return response;
     }
-
-    //public async Task<ParkingLotGenericResponseDto<List<VehicleModel>>> GetVehiclesAsync()
-    //{
-    //    var uri = new StringBuilder();
-    //    uri.Append(Uri + $"/?{ApiKeyName}={ApiKey}");
-
-
-    //    var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
-    //    var response = new ParkingLotGenericResponseDto<List<VehicleModel>>();
-
-    //    using (_httpClient)
-    //    {
-    //        var responseParkingLotWebApi = await _httpClient.SendAsync(request);
-    //        var contentResponse = await responseParkingLotWebApi.Content.ReadAsStringAsync();
-    //        var objectResponse = JsonConvert.DeserializeObject<List<VehicleModel>>(contentResponse);
-
-    //        if (!responseParkingLotWebApi.IsSuccessStatusCode)
-    //        {
-    //            response.StatusCode = responseParkingLotWebApi.StatusCode;
-    //            response.Errors.Add(contentResponse);
-    //            throw new Exception(responseParkingLotWebApi.StatusCode.ToString());
-    //        }
-    //        response.StatusCode = responseParkingLotWebApi.StatusCode;
-    //        response.Data = objectResponse;                
-    //    }
-    //    return response;
-    //}
 }
