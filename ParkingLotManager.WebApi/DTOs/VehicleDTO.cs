@@ -26,6 +26,7 @@ public class VehicleDTO
             model = this.Model,
             color = this.Color,
             Type = this.Type,
+            IsActive = this.IsActive,
             CompanyName = this.CompanyName
         };
         
