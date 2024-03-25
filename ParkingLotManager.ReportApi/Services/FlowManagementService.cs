@@ -17,6 +17,10 @@ public class FlowManagementService : IVehicleFlowManagement
     private readonly IMapper _mapper;
     private readonly ParkingLotManagerApiRest _parkingLotApi;
 
+    protected FlowManagementService()
+    {        
+    }
+
     public FlowManagementService(IMapper mapper, ParkingLotManagerApiRest parkingLotApi)
     {
         _mapper = mapper;
@@ -27,7 +31,7 @@ public class FlowManagementService : IVehicleFlowManagement
     /// Calculates the amount of checked-in vehicles
     /// </summary>
     /// <returns>Amount of checked-in vehicles</returns>
-    public async Task<int> CheckInFlowCalc()
+    public virtual async Task<int> CheckInFlowCalc()
     {
         var vehicles = await _parkingLotApi.GetVehiclesAsync();
         if (vehicles == null)
