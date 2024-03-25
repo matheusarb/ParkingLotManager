@@ -15,13 +15,13 @@ namespace ParkingLotManager.ReportApi.Services;
 public class FlowManagementService : IVehicleFlowManagement
 {
     private readonly IMapper _mapper;
-    private readonly ParkingLotManagerApiRest _parkingLotApi;
+    private readonly ParkingLotManagerWebApiService _parkingLotApi;
 
     protected FlowManagementService()
     {        
     }
 
-    public FlowManagementService(IMapper mapper, ParkingLotManagerApiRest parkingLotApi)
+    public FlowManagementService(IMapper mapper, ParkingLotManagerWebApiService parkingLotApi)
     {
         _mapper = mapper;
         _parkingLotApi = parkingLotApi;
