@@ -68,5 +68,5 @@ static void ConfigureSwagger(WebApplicationBuilder builder)
 }
 static void ConfigureMappings(WebApplicationBuilder builder)
 {
-    builder.Services.AddAutoMapper(typeof(VehicleFlowMapping));
+    builder.Services.AddAutoMapper(typeof(VehicleMapping));
 }
