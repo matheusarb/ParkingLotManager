@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ParkingLotManager.ReportApi\ParkingLotManager.ReportApi.csproj" />
     <ProjectReference Include="..\ParkingLotManager.WebApi\ParkingLotManager.WebApi.csproj" />
   </ItemGroup>
 
