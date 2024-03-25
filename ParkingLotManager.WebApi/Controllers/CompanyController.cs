@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManager.WebApi.Attributes;
 using ParkingLotManager.WebApi.Data;
+using ParkingLotManager.WebApi.DTOs;
 using ParkingLotManager.WebApi.Extensions;
 using ParkingLotManager.WebApi.Models;
 using ParkingLotManager.WebApi.ViewModels;
@@ -17,14 +19,19 @@ namespace ParkingLotManager.WebApi.Controllers;
 public class CompanyController : ControllerBase
 {
     private readonly AppDataContext _ctx;
+    private readonly IMapper _mapper;
     private const string apiKeyName = Configuration.ApiKeyName;
 
     protected CompanyController()
     {        
     }
 
-    public CompanyController(AppDataContext ctx)
-        => _ctx = ctx;
+    public CompanyController(AppDataContext ctx, IMapper mapper)
+    {
+        _ctx = ctx;
+        _mapper = mapper;
+    }  
+
 
     /// <summary>
     /// Get collection of registered companies
@@ -47,7 +54,9 @@ public class CompanyController : ControllerBase
             if (companies == null)
                 return BadRequest(new { message = "05EX5000 - Request could not be processed. Please try another time" });
 
-            return Ok(new ResultViewModel<List<Company>>(companies));
+            var companiesDto = _mapper.Map<List<CompanyDTO>>(companies);
+
+            return Ok(new JsonResult(companiesDto));
         }
         catch (Exception)
         {
@@ -80,7 +89,9 @@ public class CompanyController : ControllerBase
             if (company == null)
                 return NotFound(new { message = "05EX5002 - Company not found." });
 
-            return Ok(new ResultViewModel<Company>(company));
+            var companyDto = _mapper.Map<CompanyDTO>(company).Display();
+
+            return Ok(new JsonResult(companyDto));
         }
         catch
         {
@@ -116,10 +127,12 @@ public class CompanyController : ControllerBase
         {
             var company = new Company();
             company.Create(viewModel);
+            var companyDto = _mapper.Map<CompanyDTO>(company).Display();
+
             await _ctx.Companies.AddAsync(company);
             await _ctx.SaveChangesAsync();
 
-            return Created($"v1/companies/{company.Name}", new ResultViewModel<Company>(company));
+            return Created($"v1/companies/{company.Name}", new JsonResult(companyDto));
         }
         catch (DbException)
         {
@@ -166,10 +179,12 @@ public class CompanyController : ControllerBase
                 return NotFound(new ResultViewModel<UpdateCompanyViewModel>("05EX5007 - Company not found"));
             
             company.Update(viewModel, viewModel.Address);
+            var companyDto = _mapper.Map<CompanyDTO>(company).Display();
+
             _ctx.Update(company);
             await _ctx.SaveChangesAsync();
 
-            return Ok(new ResultViewModel<Company>(company));
+            return Ok(new JsonResult(companyDto));
         }
         catch (DbException)
         {
@@ -205,11 +220,13 @@ public class CompanyController : ControllerBase
             var company = await _ctx.Companies.FirstOrDefaultAsync(x => x.Name == name);
             if(company == null)
                 return BadRequest(new ResultViewModel<Company>("05EX5005 - Company not found"));
-            
+
+            var companyDto = _mapper.Map<CompanyDTO>(company).Display();
+
             _ctx.Remove(company);
             await _ctx.SaveChangesAsync();
 
-            return Ok(new ResultViewModel<Company>(company));
+            return Ok(new JsonResult(companyDto));
         }
         catch (Exception)
         {
