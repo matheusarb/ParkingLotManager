@@ -31,4 +31,25 @@ public class VehicleDTO
         
         return vehicleDto;
     }
+
+    public virtual List<object> DisplayList(List<VehicleDTO> list)
+    {
+        var result = new List<object>();
+        
+        foreach(var user in list)
+        {
+            var vehicleDto = new
+            {
+                licensePlate = this.LicensePlate,
+                brand = this.Brand,
+                model = this.Model,
+                color = this.Color,
+                Type = this.Type,
+                CompanyName = this.CompanyName
+            };
+            result.Add(vehicleDto);
+        }
+
+        return result;
+    }
 }
