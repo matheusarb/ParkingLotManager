@@ -62,7 +62,7 @@ public class Vehicle : IVehicle
 
     static void ChangeLicensePlate(string licensePlate, Vehicle vehicle)
     {
-        if (licensePlate == null)
+        if (licensePlate.IsNullOrEmptyOrWhiteSpace())
             return;
         vehicle.LicensePlate = licensePlate;
     }
