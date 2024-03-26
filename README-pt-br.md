@@ -41,6 +41,14 @@ Você também pode executar esses comandos através de sua IDE preferida (recome
 ## :bulb: Dicas sobre como usar
 * O propósito desse projeto é simular o backend do fluxo de trabalho de um gerenciador de estacionamento através de requisições a uma API
 * ParkingLotManager.WebApi é integralmente documentada e você encontrará todas as informações necessárias sobre os endpoints e o que cada um faz
+* Crie e gerencie o seu banco de dados através das _migrations_
+   * Execute os seguintes comandos:
+   ```
+   dotnet ef migrations add InitialCreate
+   ```
+   ```
+   dotnet ef database update
+   ```
 * Você pode executar o script.sql(Pasta raíz) para adicionar registros ao seu banco de dados
 * RBAC está configurado para ser usado no endpoint GetFordBrand(Vehicles/GetFordBrand). Primeiro, você precisa criar um admin(Account/CreateAdmin) e depois logar no sistema(Account/Login). Ao logar no sistema será gerado um Bearar Token que precisa ser passado na requisição ao endpoint.
   * Passe o token na tab "Authorization" do Postman. Selecione o tipo "Bearer Token"
