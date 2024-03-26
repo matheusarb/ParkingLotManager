@@ -29,7 +29,7 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 
 ## :star: Features
 + CRUD Operations
-+ Authentication and Authorization Services using RBAC pattern and API Key
++ Authentication and Authorization Services using RBAC(Role-based Access Control) pattern and API Key
 + Unit testing with XUnit
 + Database with SqlServer and EntityFramework Core
 + Fully documented API 
@@ -42,4 +42,8 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 * This project is intended to simulate the backend of a parking lot workflow via API requests
 * The ParkingLotManager.WebApi is fully documented, where you can find all the information about each endpoint and what it does
 * You can run the script.sql to add entries to your database
-* RBAC is binded to be used on GetFordBrand endpoint(Vehicles/GetFordBrand). First, you need to create an admin user(Account/CreateAdmin) and log in (Account/Login). Before sending a request make sure you have at least one vehicle which "brand" is "Ford" 
+* RBAC is binded to be used on GetFordBrand endpoint(Vehicles/GetFordBrand). First, you need to create an admin user(Account/CreateAdmin) and log in (Account/Login). You will receive a Bearer Token which is needed in the request.
+  * Pass the Bearer Token in the "Authorization" tab on Postman. Select Type "Bearer Token"
+  * Before sending a request make sure you have at least one vehicle which "brand" is "Ford"
+  * ![image](https://github.com/matheusarb/ParkingLotManager/assets/89713533/b39d016e-5ddb-42d4-ae5c-db2060c6ef65)
+* Set your ConnectionString inside appsettings.Development.json file
