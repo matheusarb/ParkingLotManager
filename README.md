@@ -29,7 +29,7 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 
 ## :star: Features
 + CRUD Operations
-+ Authentication and Authorization Services using RBAC(Role-based Access Control) pattern and API Key
++ Authentication and Authorization Services using RBAC(Role-based Access Control) protocol and API Key
 + Unit testing with XUnit
 + Database with SqlServer and EntityFramework Core
 + Fully documented API 
