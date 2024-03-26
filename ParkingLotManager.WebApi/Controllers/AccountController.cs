@@ -84,6 +84,7 @@ public class AccountController : ControllerBase
     /// <summary>
     /// Get collection of users
     /// </summary>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>collection of users</returns>
     [HttpGet("v1/accounts")]
     [ApiKey]
@@ -113,6 +114,7 @@ public class AccountController : ControllerBase
     /// Get user by id
     /// </summary>
     /// <param name="id">user id</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>user</returns>
     [HttpGet("v1/accounts/{id:int}")]
     [ApiKey]
@@ -143,6 +145,7 @@ public class AccountController : ControllerBase
     /// Create a user with no role
     /// </summary>
     /// <param name="viewModel">viewModel to create user</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>created user and its Uri</returns>
     [HttpPost("v1/accounts")]
     [ApiKey]
@@ -188,6 +191,7 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <param name="viewModel">viewModel to update user</param>
     /// <param name="id">user id</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>updated user</returns>
     [HttpPut("v1/accounts/{id:int}")]
     [ApiKey]
@@ -230,6 +234,7 @@ public class AccountController : ControllerBase
     /// Delete a user by its id
     /// </summary>
     /// <param name="id">user id</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>deleted user</returns>
     [HttpDelete("v1/accounts/{id:int}")]
     [ApiKey]
@@ -267,6 +272,7 @@ public class AccountController : ControllerBase
     /// Create a user with admin role
     /// </summary>
     /// <param name="viewModel">viewModel to create admin</param>
+    /// <param name="apiKeyName">API key</param>
     /// <returns>user with admin role</returns>
     [HttpPost("v1/accounts/admin")]
     [ApiKey]
