@@ -6,6 +6,7 @@
 # Data Folder
 ./Data
 ./Data/Migrations
+./Notes.txt
 
 # dotenv files
 .env
