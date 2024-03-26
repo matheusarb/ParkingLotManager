@@ -10,7 +10,7 @@
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
-> Parking Lot Manager v1 is the backend of a REST API which mocks a real-life parking lot application manager.
+> Parking Manager v1 is a backend project built on REST API that simulates the operation of a real-life parking management system.
 
 
 ## 💻 Requirements
