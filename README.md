@@ -35,8 +35,8 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 + API Documentation
 + Extension methods for exception filtering
 + API integration with Report.Api to generate reports about vehicles flow
-+ SQL script to insert entries on database
-+ Postman Collection already organized to test our endpoints in the root folder
++ SQL script to ease the creation of records on the database
++ Postman Collection(JSON in the Root folder) already organized to test our endpoints
 
 ## :bulb: Tips on how to use it
 * This project is intended to simulate the backend of a parking lot workflow via API requests
