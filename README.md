@@ -41,7 +41,7 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 ## :bulb: Tips on how to use it
 * This project is intended to simulate the backend of a parking lot workflow via API requests
 * The ParkingLotManager.WebApi is fully documented, where you can find all the information about each endpoint and what it does
-* Generate your database via ef migrations
+* Generate and manage your database via _migrations_
    * Run the following commands:
    ```
    dotnet ef migrations add InitialCreate
