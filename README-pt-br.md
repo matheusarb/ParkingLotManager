@@ -33,7 +33,7 @@ Você também pode executar esses comandos através de sua IDE preferida (recome
 + Testes de unidade com XUnit e Moq
 + Banco de dados com SqlServer e EntityFramework Core
 + API completamente documentada
-+ Métodos de extensão para filtragem de exceções
++ Métodos de extensão customizados
 + Integração de API com a Report.Api para gerar relatórios sobre o fluxo de veículos
 + Script SQL para facilitar a população do banco de dados SQL
 + Coleção no Postman(arquivo JSON na pasta raíz) já organizada para teste dos endpoints
