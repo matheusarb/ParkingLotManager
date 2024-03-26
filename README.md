@@ -33,7 +33,7 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 + Unit testing with XUnit
 + Database with SqlServer and EntityFramework Core
 + Fully documented API 
-+ Extension methods for exception filtering
++ Custom Extension methods
 + API integration with Report.Api to generate reports about vehicles flow
 + SQL script to ease the creation of records on the database
 + Postman Collection(JSON in the Root folder) already organized to test our endpoints
