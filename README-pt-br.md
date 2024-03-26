@@ -29,7 +29,7 @@ Você também pode executar esses comandos através de sua IDE preferida (recome
 
 ## :star: Funcionalidades
 + Operações CRUD
-+ Serviços de autenticação e autorização utilizando o padrão RBAC(Controle de Acesso baseado em funções) e chave API
++ Serviços de autenticação e autorização utilizando o protocolo RBAC(Controle de Acesso baseado em funções) e chave API
 + Testes de unidade com XUnit e Moq
 + Banco de dados com SqlServer e EntityFramework Core
 + API completamente documentada
