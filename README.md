@@ -32,7 +32,7 @@ You can also run these commands via your preferred IDE (we recommend using Visua
 + Authentication and Authorization Services using RBAC pattern and API Key
 + Unit testing with XUnit
 + Database with SqlServer and EntityFramework Core
-+ API Documentation
++ Fully documented API 
 + Extension methods for exception filtering
 + API integration with Report.Api to generate reports about vehicles flow
 + SQL script to ease the creation of records on the database
