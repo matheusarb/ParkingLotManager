@@ -27,7 +27,13 @@ LoadConfiguration(app);
 
 // Configure the HTTP request pipeline.
 
-if(app.Environment.IsProduction() || app.Environment.IsDevelopment())
+if (app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -94,7 +100,7 @@ static void ConfigureServices(WebApplicationBuilder builder)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<AppDataContext>(options => options.UseSqlServer(connectionString));
-    
+
     builder.Services.AddTransient<TokenService>();
 }
 
